@@ -1,10 +1,11 @@
+/* eslint-disable react/no-unescaped-entities */
 import Link from 'next/link';
 import React from 'react';
 import LoginForm from './LoginForm';
 
 const Login = () => {
   return (
-    <div className="py-[20%] px-[20%]">
+    <div className="py-[15%] px-[20%]">
       <h3 className="text-3xl text-indigo-900 bold font-extrabold">Log in</h3>
       <p className="text-slate-400 mb-12">
         Enter the email address and password associated with your GlobalAloha

@@ -4,7 +4,7 @@ import SignUpForm from './SignUpForm';
 
 const SignUp = () => {
   return (
-    <div className="py-[20%] px-[20%]">
+    <div className="py-[10%] px-[20%]">
       <h3 className="text-3xl text-indigo-900 bold font-extrabold">
         Sign up today. It just takes minutes!
       </h3>
