@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
-import Login from '../../components/Login';
+import Login from '../../components/Auth/Login';
 
 const login = () => {
   return (

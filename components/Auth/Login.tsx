@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import LoginForm from '../common/LoginForm';
+import LoginForm from './LoginForm';
 
 const Login = () => {
   return (
