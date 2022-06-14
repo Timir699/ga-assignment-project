@@ -1,8 +1,6 @@
-import { Menu } from 'antd';
 import Head from 'next/head';
 import React from 'react';
 import ActivityLibrary from '../../../components/ActivityLibrary/ActivityLibrary';
-import FilterDropdown from '../../../shared-component/FilterDropdown';
 
 const All = () => {
   return (

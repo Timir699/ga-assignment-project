@@ -1,8 +1,7 @@
 import { Layout, Menu } from 'antd';
 import React, { useState } from 'react';
-import FilterDropdown from '../../shared-component/FilterDropdown';
 import ActivityContent from './ActivityContent';
-const { Header, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 const ActivityLibrary = () => {
   const [collapsed, setCollapsed] = useState(false);
