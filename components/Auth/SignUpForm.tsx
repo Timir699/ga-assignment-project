@@ -3,7 +3,10 @@ import { Button, Form, Input, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
 import React from 'react';
 
-let SelectOption = [{value: 'punaho', label: 'Punaho'}, {value: 'staging', label: 'Staging Root Group'}]
+let SelectOption = [
+  { value: 'punaho', label: 'Punaho' },
+  { value: 'staging', label: 'Staging Root Group' },
+];
 
 const SignUpForm = () => {
   const onFinish = (values: any) => {
@@ -12,7 +15,7 @@ const SignUpForm = () => {
 
   const onSecondCityChange = (values: any) => {
     console.log(values);
-  }
+  };
 
   return (
     <Form
@@ -36,13 +39,13 @@ const SignUpForm = () => {
       >
         <Input
           size="large"
-          style={{ maxWidth: 500, borderRadius: "5px" }}
+          style={{ maxWidth: 500, borderRadius: '5px' }}
           placeholder="Enter Full Name"
         />
       </Form.Item>
       <Form.Item
-      labelCol={{ span: 24 }}
-      label="Email"
+        labelCol={{ span: 24 }}
+        label="Email"
         name="Email"
         rules={[
           {
@@ -52,14 +55,14 @@ const SignUpForm = () => {
         ]}
       >
         <Input
-        size="large"
+          size="large"
           style={{ maxWidth: 500 }}
           placeholder="Enter Email Address"
         />
       </Form.Item>
       <Form.Item
-      labelCol={{ span: 24 }}
-      label="School"
+        labelCol={{ span: 24 }}
+        label="School"
         name="School"
         rules={[
           {
@@ -68,16 +71,22 @@ const SignUpForm = () => {
           },
         ]}
       >
-        <Select size="large" placeholder="Select a School" style={{ maxWidth: 500, borderRadius: "5px"}} value={SelectOption} onChange={onSecondCityChange}>
-        {SelectOption.map(option => (
-          <Option key={option.value}>{option.label}</Option>
-        ))}
-      </Select>
+        <Select
+          size="large"
+          placeholder="Select a School"
+          style={{ maxWidth: 500, borderRadius: '5px' }}
+          value={SelectOption}
+          onChange={onSecondCityChange}
+        >
+          {SelectOption.map((option) => (
+            <Option key={option.value}>{option.label}</Option>
+          ))}
+        </Select>
       </Form.Item>
-      
+
       <Form.Item
-      labelCol={{ span: 24 }}
-      label="Password"
+        labelCol={{ span: 24 }}
+        label="Password"
         name="Password"
         rules={[
           {
@@ -86,9 +95,9 @@ const SignUpForm = () => {
           },
         ]}
       >
-        <Input
-        size="large"
-          style={{ maxWidth: 500, borderRadius: "5px" }}
+        <Input.Password
+          size="large"
+          style={{ maxWidth: 500, borderRadius: '5px' }}
           type="password"
           placeholder="Password"
         />

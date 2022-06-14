@@ -18,7 +18,7 @@ const Login = () => {
       </p>
       <p>
         Alternatively, you can visit the
-        <Link href="/library"> Library</Link> pages
+        <Link href="/library/all"> Library</Link> pages
       </p>
     </div>
   );

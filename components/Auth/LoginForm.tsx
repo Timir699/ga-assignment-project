@@ -17,6 +17,8 @@ const LoginForm = () => {
       onFinish={onFinish}
     >
       <Form.Item
+        labelCol={{ span: 24 }}
+        label="Email"
         name="Email"
         rules={[
           {
@@ -26,12 +28,14 @@ const LoginForm = () => {
         ]}
       >
         <Input
-          style={{ width: 500, padding: 10 }}
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Email"
+          size="large"
+          style={{ maxWidth: 500, borderRadius: '5px' }}
+          placeholder="Enter Your Email"
         />
       </Form.Item>
       <Form.Item
+        labelCol={{ span: 24 }}
+        label="Password"
         name="Password"
         rules={[
           {
@@ -40,11 +44,14 @@ const LoginForm = () => {
           },
         ]}
       >
-        <Input
-          style={{ width: 500, padding: 10, marginTop: 10 }}
-          prefix={<LockOutlined className="site-form-item-icon" />}
+        <Input.Password
+          size="large"
+          style={{
+            maxWidth: 500,
+            borderRadius: '5px',
+          }}
           type="password"
-          placeholder="Password"
+          placeholder="Enter Your Password"
         />
       </Form.Item>
       <Form.Item>

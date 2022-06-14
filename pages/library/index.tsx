@@ -1,7 +1,8 @@
+import { Layout } from 'antd';
 import React from 'react';
 
-const library = () => {
-  return <div>library</div>;
+const Library = () => {
+  return <div></div>;
 };
 
-export default library;
+export default Library;
