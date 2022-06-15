@@ -80,3 +80,10 @@
 .ant-layout-sider {
     background-color: #fff !important;
 }
+/* .ant-layout-content  {
+  margin: 0 !important;
+} */
+.site-layout-background {
+  margin: 0 !important;
+  border-left: 1px solid #eee;
+}

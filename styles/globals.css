@@ -39,3 +39,18 @@ a {
 .nav-a-light-bold {
   font-weight: 500;
 }
+.collapsed-btn {
+  overflow: "auto";
+  position: fixed;
+  top: 180;
+  left: 100;
+  padding: 0;
+}
+
+.not-collapsed-btn {
+  overflow: "auto";
+  position: fixed;
+  top: 180;
+  left: 75;
+  padding: 0;
+}
