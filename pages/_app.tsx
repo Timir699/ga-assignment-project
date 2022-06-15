@@ -14,6 +14,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (router.asPath == '/signup') {
     return <Component {...pageProps} />;
   }
+  if (router.asPath == '/dashboard/activities') {
+    return <Component {...pageProps} />;
+  }
 
   return (
     <Layout>

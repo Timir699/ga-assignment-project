@@ -1,49 +1,82 @@
 .ant-form-item-label
-  > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
-  display: inline-block !important;
-  margin-right: 4px !important;
-  color: #ff4d4f !important;
-  font-size: 14px !important;
-  font-family: SimSun, sans-serif !important;
-  line-height: 1 !important;
-  content: '*' !important;
+    > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+    display: inline-block !important;
+    margin-right: 4px !important;
+    color: #ff4d4f !important;
+    font-size: 14px !important;
+    font-family: SimSun, sans-serif !important;
+    line-height: 1 !important;
+    content: '*' !important;
 }
 .ant-form-item-label
-  > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
-  display: inline-block !important;
-  margin-right: 0px !important;
-  color: #ff4d4f !important;
-  font-size: 14px !important;
-  font-family: SimSun, sans-serif !important;
-  line-height: 1 !important;
-  content: '' !important;
+    > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    display: inline-block !important;
+    margin-right: 0px !important;
+    color: #ff4d4f !important;
+    font-size: 14px !important;
+    font-family: SimSun, sans-serif !important;
+    line-height: 1 !important;
+    content: '' !important;
 }
 .ant-form-item {
-  margin-bottom: 10px !important;
+    margin-bottom: 10px !important;
 }
 .ant-form-vertical .ant-form-item-label,
 .ant-col-24.ant-form-item-label,
 .ant-col-xl-24.ant-form-item-label {
-  padding: 0 !important;
+    padding: 0 !important;
 }
 
 .ant-layout-header {
-  background: #fff !important;
-  padding: 0 300px !important;
+    background: #fff !important;
+    padding: 0 20px !important;
 }
 .ant-menu-horizontal > .ant-menu-item::after,
 .ant-menu-horizontal > .ant-menu-submenu::after {
-  bottom: 20px !important;
+    bottom: 20px !important;
 }
 
 .ant-menu-horizontal {
-  border-bottom: 0px !important;
+    border-bottom: 0px !important;
 }
 .ant-menu-inline,
 .ant-menu-vertical,
 .ant-menu-vertical-left {
-  border-right: none !important;
+    border-right: none !important;
 }
 .ant-card-body {
-  padding: 10px !important;
+    padding: 10px !important;
+}
+
+#components-layout-demo-custom-trigger .trigger {
+    padding: 0 24px;
+    font-size: 18px;
+    line-height: 64px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#components-layout-demo-custom-trigger .trigger:hover {
+    color: #1890ff;
+}
+
+#components-layout-demo-custom-trigger .logo {
+    height: 32px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.site-layout .site-layout-background {
+    background: #fff;
+}
+
+.ant-layout-sider-children {
+    height: 100vh !important;
+    padding-top: 0px !important;
+}
+/* .sidebar-margin-top {
+    margin-top: 60% !important;
+} */
+.ant-layout-sider {
+    background-color: #fff !important;
 }
