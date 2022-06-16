@@ -1,10 +1,6 @@
-import { Breadcrumb, Col, Layout, Menu, Row } from 'antd';
-import Image from 'next/image';
+import { Menu } from 'antd';
 import Link from 'next/link';
 import React from 'react';
-import { HomeOutlined } from '@ant-design/icons';
-
-const { Header, Content, Footer } = Layout;
 
 const Navbar: React.FC = () => (
   <div

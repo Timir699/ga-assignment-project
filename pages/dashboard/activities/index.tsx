@@ -1,12 +1,7 @@
 import React from 'react';
-import SideNav from '../../../components/SideNav/SideNav';
 
 const Activities = () => {
-    return (
-        <div>
-            <SideNav />
-        </div>
-    );
+  return <div className="container">rshr</div>;
 };
 
 export default Activities;
