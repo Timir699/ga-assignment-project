@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import React from 'react';
-import ActivityContent from '../../../components/ActivityLibrary/ActivityContent';
+import MyActivityContent from '../../../components/ActivityLibrary/MyActivityContent';
 
 const Activities = () => {
   return (
@@ -17,7 +17,7 @@ const Activities = () => {
       </div>
 
       <div className="mt-12 ml-[5%]">
-        <ActivityContent />
+        <MyActivityContent />
       </div>
     </div>
   );
