@@ -94,6 +94,7 @@ const SideNav: React.FC = ({ children }: any) => {
             padding: 0,
             borderBottom: '1px solid #eee',
             overflow: 'hidden',
+            zIndex: 999
           }}
         >
           <ProtectedNav />

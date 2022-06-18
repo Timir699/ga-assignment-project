@@ -1,6 +1,8 @@
 import { Button } from 'antd';
 import React from 'react';
 import MyActivityContent from '../../../components/ActivityLibrary/MyActivityContent';
+import CreateActivityModal from '../../../components/Modals/CreateActivityModal';
+import JoinActivityModal from '../../../components/Modals/JoinActivityModal';
 
 const Activities = () => {
   return (
@@ -12,8 +14,9 @@ const Activities = () => {
         <p className="text-slate-400">
           Includes Projects, Companies, Internships & Contests
         </p>
-        <Button type="primary">Join Activity</Button>
-        <Button className="ml-4">Create Activity</Button>
+        
+        <JoinActivityModal />
+        <CreateActivityModal />
       </div>
 
       <div className="mt-12 ml-[5%]">
