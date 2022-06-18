@@ -87,3 +87,6 @@
   margin: 0 !important;
   border-left: 1px solid #eee;
 }
+.ant-input-group-addon {
+    display: none !important;
+}

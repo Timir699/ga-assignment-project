@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import ActivityLibrary from '../../../components/ActivityLibrary/ActivityLibrary';
+import SearchField from '../../../shared-component/SearchField';
 
 const All = () => {
   return (

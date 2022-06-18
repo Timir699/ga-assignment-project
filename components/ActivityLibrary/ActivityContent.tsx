@@ -6,7 +6,6 @@ import ListView from '../../shared-component/ListView';
 
 const ActivityContent = () => {
     const [isList, setIsList] = useState<boolean>(false);
-    console.log(isList);
 
     return (
         <div>
