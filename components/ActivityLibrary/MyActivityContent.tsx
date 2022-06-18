@@ -3,8 +3,8 @@ import FilterDropdown from '../../shared-component/FilterDropdown';
 import GridView from '../../shared-component/GridView';
 import ListView from '../../shared-component/ListView';
 
-const ActivityContent = () => {
-    const [isList, setIsList] = useState<boolean>(false);
+const MyActivityContent = () => {
+  const [isList, setIsList] = useState<boolean>(false);
 
   return (
     <div>
@@ -29,4 +29,4 @@ const ActivityContent = () => {
   );
 };
 
-export default ActivityContent;
+export default MyActivityContent;
