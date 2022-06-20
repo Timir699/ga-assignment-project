@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd';
+import { Button, Modal, Select } from 'antd';
 import React, { useState } from 'react';
 
 const CreateActivityModal: React.FC = () => {
@@ -19,13 +19,15 @@ const CreateActivityModal: React.FC = () => {
   return (
     <>
       <Button className="ml-4" onClick={showModal}>
-       Create Activity
+        Create Activity
       </Button>
-      <Modal title="Create an Activity" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
+      <Modal
+        title="Create an Activity"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        cancelButtonProps={{ style: { display: 'none' } }}
+      ></Modal>
     </>
   );
 };
