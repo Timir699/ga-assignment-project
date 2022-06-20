@@ -4,7 +4,7 @@ import GridView from '../../shared-component/GridView';
 import ListView from '../../shared-component/ListView';
 
 const ActivityContent = () => {
-    const [isList, setIsList] = useState<boolean>(false);
+  const [isList, setIsList] = useState<boolean>(false);
 
   return (
     <div>
@@ -20,11 +20,11 @@ const ActivityContent = () => {
             onClick={() => setIsList(!isList)}
             className="cursor-pointer ml-4"
           >
-            {isList ? 'List View' : 'Grid view'}
+            {isList ? 'Grid view' : 'List View'}
           </span>
         </div>
       </div>
-      {isList ? <GridView /> : <ListView />}
+      {isList ? <ListView /> : <GridView />}
     </div>
   );
 };

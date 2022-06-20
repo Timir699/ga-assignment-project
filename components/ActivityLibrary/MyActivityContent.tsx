@@ -21,11 +21,11 @@ const MyActivityContent = () => {
             onClick={() => setIsList(!isList)}
             className="cursor-pointer ml-4"
           >
-            {isList ? 'List View' : 'Grid view'}
+            {isList ? 'Grid view' : 'List View'}
           </span>
         </div>
       </div>
-      {isList ? <GridView /> : <ListView />}
+      {isList ? <ListView /> : <GridView />}
     </div>
   );
 };

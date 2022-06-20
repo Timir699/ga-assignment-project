@@ -2,6 +2,7 @@ import { Avatar, Breadcrumb, Col, Dropdown, Layout, Menu, Row } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { BellFilled } from '@ant-design/icons';
+import SearchField from './SearchField';
 
 const notifications = (
   <Menu>
@@ -28,15 +29,25 @@ const ProtectedNav: React.FC = () => (
       justifyContent: 'space-around',
     }}
   >
-    <div>
-      <Menu mode="horizontal" defaultSelectedKeys={['activities']}>
-        <Link href="/library/all">
-          <a className="nav-a nav-a-light-bold">Activity Library</a>
-        </Link>
-        <Link href="/library/group">
-          <a className="nav-a nav-a-light-bold">Groups</a>
-        </Link>
-      </Menu>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <div>
+        <SearchField />
+      </div>
+      <div>
+        <Menu mode="horizontal">
+          <Link href="/library/all">
+            <a className="nav-a nav-a-light-bold">Activity Library</a>
+          </Link>
+          <Link href="/library/group">
+            <a className="nav-a nav-a-light-bold">Groups</a>
+          </Link>
+        </Menu>
+      </div>
     </div>
     <div>
       <div
