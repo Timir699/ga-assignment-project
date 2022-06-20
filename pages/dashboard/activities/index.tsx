@@ -14,7 +14,7 @@ const Activities = () => {
         <p className="text-slate-400">
           Includes Projects, Companies, Internships & Contests
         </p>
-        
+
         <JoinActivityModal />
         <CreateActivityModal />
       </div>

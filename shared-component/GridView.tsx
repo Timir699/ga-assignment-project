@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import CustomCard from './CustomCard';
+import Link from 'next/link';
 
 const GridView = () => {
   return (
