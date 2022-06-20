@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import FilterDropdown from '../../shared-component/FilterDropdown';
+import FilterModal from '../../shared-component/FilterModal';
 import GridView from '../../shared-component/GridView';
 import ListView from '../../shared-component/ListView';
 
@@ -15,7 +16,7 @@ const MyActivityContent = () => {
           </h3>
         </div>
         <div>
-          <FilterDropdown />
+          <FilterModal />
           <span
             onClick={() => setIsList(!isList)}
             className="cursor-pointer ml-4"
