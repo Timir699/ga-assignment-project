@@ -1,5 +1,6 @@
 import { Button, Modal, Select } from 'antd';
 import React, { useState } from 'react';
+import CreateActivityForm from '../Forms/CreateActivityForm';
 
 const CreateActivityModal: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -27,7 +28,12 @@ const CreateActivityModal: React.FC = () => {
         onOk={handleOk}
         onCancel={handleCancel}
         cancelButtonProps={{ style: { display: 'none' } }}
-      ></Modal>
+        okButtonProps={{ form: 'CreateActivityForm', htmlType: 'submit' }}
+        okText="Create"
+        destroyOnClose={true}
+      >
+        <CreateActivityForm />
+      </Modal>
     </>
   );
 };

@@ -20,10 +20,6 @@ const JoinActivityModal: React.FC = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -39,17 +35,17 @@ const JoinActivityModal: React.FC = () => {
       <Modal
         title="Join an activity"
         visible={isModalVisible}
-        okButtonProps={{ form: 'myForm', htmlType: 'submit' }}
+        okButtonProps={{ form: 'joinActivityForm', htmlType: 'submit' }}
         onCancel={handleCancel}
         cancelButtonProps={{ style: { display: 'none' } }}
         okText="Join"
+        destroyOnClose={true}
       >
         <Form
-          id="myForm"
-          name="normal_login"
-          className="login-form"
+          id="joinActivityForm"
+          name="join-activity-form"
           initialValues={{
-            remember: true,
+            remember: false,
           }}
           onFinish={onFinish}
         >
