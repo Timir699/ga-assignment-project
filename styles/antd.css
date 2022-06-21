@@ -93,3 +93,6 @@
 .ant-layout-sider-light {
   border-right: 1px solid #eee;
 }
+.ant-input-group-wrapper {
+  vertical-align: middle !important;
+}

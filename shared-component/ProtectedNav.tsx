@@ -39,9 +39,8 @@ const ProtectedNav: React.FC = () => (
         alignItems: 'center',
       }}
     >
-      <div>
-        <SearchField />
-      </div>
+      <SearchField />
+
       <div>
         <Menu mode="horizontal">
           <Link href="/library/all">
