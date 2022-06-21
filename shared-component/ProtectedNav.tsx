@@ -16,7 +16,11 @@ const notifications = (
 );
 const profile = (
   <Menu>
-    <Menu.Item key="1">Profile</Menu.Item>
+    <Menu.Item key="1">
+      <Link href="/user" className="nav-text">
+        Profile
+      </Link>
+    </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="2">Logout</Menu.Item>
   </Menu>

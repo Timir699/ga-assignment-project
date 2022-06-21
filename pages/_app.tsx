@@ -30,6 +30,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       </ProtectedLayout>
     );
   }
+  if (router.asPath == '/user') {
+    return (
+      <ProtectedLayout>
+        <Component {...pageProps} />
+      </ProtectedLayout>
+    );
+  }
 
   return (
     <Layout>

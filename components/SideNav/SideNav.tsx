@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Activities from '../../pages/dashboard/activities';
 import Groups from '../../pages/dashboard/group';
+import User from '../../pages/user';
 import ProtectedNav from '../../shared-component/ProtectedNav';
 
 const { Header, Sider, Content } = Layout;
@@ -94,7 +95,7 @@ const SideNav: React.FC = ({ children }: any) => {
             padding: 0,
             borderBottom: '1px solid #eee',
             overflow: 'hidden',
-            zIndex: 999
+            zIndex: 999,
           }}
         >
           <ProtectedNav />
@@ -112,11 +113,17 @@ const SideNav: React.FC = ({ children }: any) => {
             <div className={collapsed ? '' : 'container'}>
               <Activities />
             </div>
-          ) : (
+          ) : null}
+          {router.pathname === '/dashboard/group' ? (
             <div className={collapsed ? '' : 'container'}>
               <Groups />
             </div>
-          )}
+          ) : null}
+          {router.pathname === '/user' ? (
+            <div className={collapsed ? '' : 'container'}>
+              <User />
+            </div>
+          ) : null}
         </Content>
       </Layout>
     </Layout>
