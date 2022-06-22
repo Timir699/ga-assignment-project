@@ -3,7 +3,7 @@ import React from 'react';
 
 const { Meta } = Card;
 
-const CustomCard = () => {
+const CustomCard = ({ name, id }: any) => {
   return (
     <Card
       hoverable
@@ -15,7 +15,7 @@ const CustomCard = () => {
         />
       }
     >
-      <Meta title="Europe Street beat" description="www.instagram.com" />
+      <Meta title={name} description="www.instagram.com" />
     </Card>
   );
 };

@@ -1,5 +1,6 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
+import Link from 'next/link';
 import React from 'react';
 
 interface DataType {
@@ -14,6 +15,11 @@ const columns: ColumnsType<DataType> = [
     title: 'Name',
     dataIndex: 'name',
     width: 200,
+    render: (name: any, record: any) => (
+      <Link href={`/dashboard/activities/${record?.key}`}>
+        <a className="text-blue-500 text-shadow-hover quote-no-link">{name}</a>
+      </Link>
+    ),
   },
   {
     title: 'Age',
@@ -30,13 +36,19 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'address',
     width: 200,
   },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+    width: 200,
+  },
 ];
 
 const data: DataType[] = [];
-for (let i = 0; i < 100; i++) {
+
+for (let i = 0; i < 50; i++) {
   data.push({
     key: i,
-    name: `Edward King ${i}`,
+    name: `Edward King`,
     age: 32,
     address: `London, Park Lane no. ${i}`,
   });
