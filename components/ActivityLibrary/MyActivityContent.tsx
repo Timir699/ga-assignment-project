@@ -8,7 +8,6 @@ import ListView from '../../shared-component/ListView';
 const MyActivityContent = () => {
   const [isList, setIsList] = useState<boolean>(false);
 
-
   return (
     <div>
       <div className="flex justify-between">

@@ -2,25 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Col, Pagination, Row } from 'antd';
 import CustomCard from './CustomCard';
 import Link from 'next/link';
-import type { PaginationProps } from 'antd';
 
-const PublicGridView = () => {
-  const dummyData = [
-    { name: 'Europe Street beat', id: '1' },
-    { name: 'hello', id: '2' },
-    { name: 'hello', id: '3' },
-    { name: 'gsdf', id: '4' },
-    { name: 'hello', id: '5' },
-    { name: 'sdg', id: '6' },
-    { name: 'hello', id: '7' },
-    { name: 'sdv', id: '8' },
-  ];
+const PublicGroupGridView = ({ groupsData }: any) => {
+  console.log(groupsData);
 
-  const pageSize = 3;
+  const pageSize = 5;
 
   const [paginationState, setPaginationState] = useState({
-    data: dummyData,
-    totalPage: dummyData.length / pageSize,
+    data: groupsData,
+    totalPage: groupsData.length / pageSize,
     current: 1,
     minIndex: 0,
     maxIndex: 0,
@@ -38,8 +28,8 @@ const PublicGridView = () => {
   useEffect(() => {
     setPaginationState((prevState) => ({
       ...prevState,
-      dummyData,
-      totalPage: dummyData.length / pageSize,
+      groupsData,
+      totalPage: groupsData.length / pageSize,
       minIndex: 0,
       maxIndex: pageSize,
     }));
@@ -48,13 +38,18 @@ const PublicGridView = () => {
   return (
     <div>
       <Row gutter={[16, 16]}>
-        {dummyData.map(
-          (e, i) =>
+        {groupsData.map(
+          (e: any, i: any) =>
             i >= paginationState.minIndex &&
             i < paginationState.maxIndex && (
-              <Link key={e.id} href={`/library/all/${e.id}`}>
-                <Col xs={24} xl={8} lg={12}>
-                  <CustomCard name={e.name} id={e.id} />
+              <Link key={e.Id} href={`/library/group/${e.Id}`}>
+                <Col xs={24} xl={6} lg={12}>
+                  <CustomCard
+                    image={e.Properties.bannerImage}
+                    members={e.TeamCount}
+                    name={e.Title}
+                    id={e.Id}
+                  />
                 </Col>
               </Link>
             )
@@ -64,11 +59,11 @@ const PublicGridView = () => {
         style={{ marginTop: 50 }}
         pageSize={pageSize}
         current={paginationState.current}
-        total={dummyData.length}
+        total={groupsData.length}
         onChange={onPageChange}
       />
     </div>
   );
 };
 
-export default PublicGridView;
+export default PublicGroupGridView;
