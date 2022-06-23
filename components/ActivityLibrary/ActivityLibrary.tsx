@@ -1,10 +1,33 @@
 import { Layout, Menu } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ActivityContent from './ActivityContent';
 const { Sider, Content } = Layout;
 
 const ActivityLibrary = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const params = {
+    pageIndex: 0,
+    pageSize: 12,
+  };
+
+  useEffect(() => {
+    fetch(
+      'https://api-globalalohaservice-dev.saams.xyz/v1/activity/library?pageIndex=0&pageSize=12',
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          searchParam: undefined,
+          filterParam: undefined,
+          goal: undefined,
+          activityType: null,
+        }),
+      }
+    ).then((res) => console.log(res));
+  }, []);
+
   return (
     <Layout className="mt-12 mx-[12%]">
       <Sider trigger={null} collapsible collapsed={collapsed} theme="light">
