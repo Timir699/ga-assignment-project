@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import FilterDropdown from '../../shared-component/FilterDropdown';
 import GridView from '../../shared-component/GridView';
 import ListView from '../../shared-component/ListView';
+import PublicGridView from '../../shared-component/PublicGridView';
+import PublicListView from '../../shared-component/PublicListView';
 
 const ActivityContent = () => {
   const [isList, setIsList] = useState<boolean>(false);
@@ -24,7 +26,7 @@ const ActivityContent = () => {
           </span>
         </div>
       </div>
-      {isList ? <ListView /> : <GridView />}
+      {isList ? <PublicListView /> : <PublicGridView />}
     </div>
   );
 };

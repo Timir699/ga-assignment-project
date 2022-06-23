@@ -5,10 +5,11 @@ import { useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
-    router.push('/login')
-  }, [])
+    router.push('/login');
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>

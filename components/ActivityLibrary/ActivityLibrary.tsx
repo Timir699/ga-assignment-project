@@ -9,7 +9,7 @@ const ActivityLibrary = () => {
     <Layout className="mt-12 mx-[12%]">
       <Sider trigger={null} collapsible collapsed={collapsed} theme="light">
         <div className="logo" />
-        <h2 className="mt-6">Types</h2>
+        <h2 className="mt-6">Filter</h2>
         <Menu
           theme="light"
           mode="inline"
@@ -21,23 +21,7 @@ const ActivityLibrary = () => {
             },
             {
               key: '2',
-              label: 'Projects',
-            },
-            {
-              key: '3',
-              label: 'Companies',
-            },
-            {
-              key: '4',
-              label: 'Internships',
-            },
-            {
-              key: '5',
-              label: 'Challenges',
-            },
-            {
-              key: '6',
-              label: 'Events',
+              label: 'My Favorites',
             },
           ]}
         />

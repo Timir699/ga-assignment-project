@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import FilterDropdown from '../../shared-component/FilterDropdown';
 import FilterModal from '../../shared-component/FilterModal';
 import GridView from '../../shared-component/GridView';
@@ -6,6 +7,7 @@ import ListView from '../../shared-component/ListView';
 
 const MyActivityContent = () => {
   const [isList, setIsList] = useState<boolean>(false);
+
 
   return (
     <div>
