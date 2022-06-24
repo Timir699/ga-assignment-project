@@ -3,7 +3,7 @@ import axios from 'axios';
 import auth from "../auth";
 
 
-const allLibraryActivity = ({pageIndex,pageSize,data}: any) => axios.post(`${baseActivityUrl}/v1/activity/library`,data,{ params: {
+const allLibraryActivity = (pageIndex : number,pageSize: number,data: any) => axios.post(`${baseActivityUrl}/v1/activity/library`,data,{ params: {
     pageIndex,
     pageSize
   }});
