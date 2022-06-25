@@ -3,16 +3,11 @@ import { Col, Pagination, Row } from 'antd';
 import CustomCard from './CustomCard';
 import Link from 'next/link';
 
-const dummyData = [
-  { name: 'Europe Street beat', id: '1' },
-  { name: 'hello', id: '2' },
-  { name: 'yo', id: '3' },
-  { name: 'hello', id: '4' },
-  { name: 'dfg', id: '5' },
-  { name: 'hello', id: '6' },
-];
 
-const GridView = () => {
+
+const GridView = ({librayActivities}: any) => {
+
+  const dummyData = librayActivities;
   const pageSize = 2;
 
   const [paginationState, setPaginationState] = useState({

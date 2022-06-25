@@ -1,5 +1,4 @@
 import client from "../client";
-// import qs from 'qs';
 import { baseUrl } from "../api";
 import axios from 'axios';
 const querystring = require('querystring');

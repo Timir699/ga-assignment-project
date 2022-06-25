@@ -17,7 +17,6 @@ const getOwnLibraryActivity = (token: any) => {
       }});
       return actvities
     })
-   
 }
 
 const LibraryActivity = {

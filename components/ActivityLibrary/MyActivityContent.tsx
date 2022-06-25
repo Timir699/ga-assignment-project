@@ -5,29 +5,11 @@ import FilterModal from '../../shared-component/FilterModal';
 import GridView from '../../shared-component/GridView';
 import ListView from '../../shared-component/ListView';
 
-const MyActivityContent = () => {
+const MyActivityContent = ({librayActivities}: any) => {
+  console.log(librayActivities);
+  
   const [isList, setIsList] = useState<boolean>(false);
   const [activitiesData, setActivitiesData] = useState<boolean>();
-
-  // useEffect(() => {
-  //   fetch(
-  //     'https://api-globalalohaservice-dev.saams.xyz/v1/activity/library?pageIndex=0&pageSize=12',
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         'content-type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         activityType: 0,
-  //         searchParam: 'string',
-  //         filterParam: 'string',
-  //         goal: 'string',
-  //         category: 'string',
-  //         classYearId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  //       }),
-  //     }
-  //   ).then((data) => console.log(data));
-  // }, []);
 
   return (
     <div>
@@ -47,7 +29,7 @@ const MyActivityContent = () => {
           </span>
         </div>
       </div>
-      {isList ? <ListView /> : <GridView />}
+      {isList ? <ListView /> : <GridView librayActivities={librayActivities} />}
     </div>
   );
 };

@@ -1,14 +1,57 @@
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
-import React from 'react';
+import { Button, Form, Input } from 'antd';
+import React , {useState, useEffect} from 'react';
+import api from "../../api/index"
+import { AuthContext } from '../../auth-context/auth-context';
+import { useRouter } from "next/router";
 
 const LoginForm = () => {
+  const router = useRouter()
+  const authContext = React.useContext(AuthContext);
+
+  const [errMsg, setErrMsg] = useState('');
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    if (user) {
+       authContext?.setUserAuthInfo(user)
+    }
+  }, [user]);
+
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+    const obj = {
+      UserName: values?.username,
+      Password: values?.password,
+      "Grant_Type": "password",
+      "Scope": "v2,e1e0322c-acb0-4a24-958c-23b2ad912a2c,af3baf1d-7aae-462c-9d1e-051cef459b86,123456",
+      "DeviceInfo": "123456"
+     }
+
+    const response = api.auth.signIn(obj);
+
+    response.then(response => response.data)
+            .then(data => {
+              setUser(JSON.stringify(data))
+              router.push("/dashboard/activities");
+            })
+            .catch(err => {
+              if (!err?.response) {
+                setErrMsg('No Server Response');
+              } else if (err.response?.status === 400) {
+                setErrMsg('Email or Password does not valid');
+              } else if (err.response?.status === 401) {
+                  setErrMsg('Unauthorized');
+              } else {
+                setErrMsg('Login Failed');
+              }
+            })
   };
 
+
   return (
-    <Form
+    <>
+     <p className={errMsg ? "errmsg" : "offscreen"}  style={{ color: 'red' }} aria-live="assertive">{errMsg}</p>
+
+     <Form
       name="normal_login"
       className="login-form"
       initialValues={{
@@ -19,7 +62,7 @@ const LoginForm = () => {
       <Form.Item
         labelCol={{ span: 24 }}
         label="Email"
-        name="Email"
+        name="username"
         rules={[
           {
             required: true,
@@ -36,7 +79,7 @@ const LoginForm = () => {
       <Form.Item
         labelCol={{ span: 24 }}
         label="Password"
-        name="Password"
+        name="password"
         rules={[
           {
             required: true,
@@ -63,9 +106,11 @@ const LoginForm = () => {
         >
           Log in
         </Button>
-        {/* Or <a href="">register now!</a> */}
       </Form.Item>
     </Form>
+    </>
+
+    
   );
 };
 
