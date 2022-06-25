@@ -8,6 +8,8 @@ import { useRouter } from 'next/router';
 import ProtectedLayout from '../shared-component/ProtectedLayout';
 import { AuthProvider } from '../auth-context/auth-context';
 
+
+
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
 

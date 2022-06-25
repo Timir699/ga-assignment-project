@@ -10,17 +10,13 @@ import api from '../../../api';
 const Activities = () => {
 
   const router = useRouter();
-
   const authContext = React.useContext(AuthContext);
   const [librayActivities, setLibrayActivities] = useState([]);
 
   useEffect(() => {
-    // checks if the user is authenticated
 
     const tokenStr = localStorage.getItem("token") ? localStorage.getItem("token") : ""
-   
-    console.log(authContext.authState)
-    console.log(authContext.isUserAuthenticated())
+  
     tokenStr
     ? console.log("login success")
     : router.push("/login");
@@ -34,7 +30,6 @@ const Activities = () => {
           setLibrayActivities(data)
       })
     }
-   
   }, []);
   return (
     <div className="container">
