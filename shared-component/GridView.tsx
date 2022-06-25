@@ -8,7 +8,7 @@ import Link from 'next/link';
 const GridView = ({librayActivities}: any) => {
 
   const dummyData = librayActivities;
-  const pageSize = 2;
+  const pageSize = 3;
 
   const [paginationState, setPaginationState] = useState({
     data: dummyData,
@@ -43,9 +43,9 @@ const GridView = ({librayActivities}: any) => {
           (e, i) =>
             i >= paginationState.minIndex &&
             i < paginationState.maxIndex && (
-              <Link key={e.id} href={`/dashboard/activities/${e.id}`}>
+              <Link key={e.id} href={`/dashboard/activities/${e.Id}`}>
                 <Col xs={24} xl={8} lg={12}>
-                  <CustomCard name={e.name} id={e.id} />
+                  <CustomCard name={e.Title} id={e.Id} ManagerName={e.ManagerName} />
                 </Col>
               </Link>
             )
