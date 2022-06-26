@@ -8,8 +8,6 @@ import { useRouter } from 'next/router';
 import ProtectedLayout from '../shared-component/ProtectedLayout';
 import { AuthProvider } from '../auth-context/auth-context';
 
-
-
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
 
@@ -50,9 +48,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
 
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
+        <>
+            <AuthProvider>
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            </AuthProvider>
+        </>
     );
 }
 
