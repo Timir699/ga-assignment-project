@@ -10,16 +10,16 @@ import { AuthContext } from '../../../auth-context/auth-context';
 const Groups = () => {
     const router = useRouter();
 
-    const [groupActibities, setGroupActibities] = useState([]);
-    const authContext = React.useContext(AuthContext);
+   
 
+    const [groupActibities, setGroupActibities] = useState<any>();
+    const authContext = React.useContext(AuthContext);
     useEffect(() => {
         const tokenStr = localStorage.getItem('token')
             ? localStorage.getItem('token')
             : '';
 
-        console.log(authContext.authState);
-        console.log(authContext.isUserAuthenticated());
+       
         tokenStr ? console.log('login success') : router.push('/login');
 
         if (tokenStr) {
@@ -44,7 +44,7 @@ const Groups = () => {
 
     const [paginationState, setPaginationState] = useState({
         data: groupActibities,
-        totalPage: groupActibities.length / pageSize,
+        totalPage: groupActibities?.Groups?.length / pageSize,
         current: 1,
         minIndex: 0,
         maxIndex: 0,
@@ -74,7 +74,7 @@ const Groups = () => {
             <div className="mt-12 ml-[5%]">
                 <h2>Group List</h2>
                 <Row gutter={[16, 16]}>
-                    {groupActibities.Groups?.map((e) => (
+                    {groupActibities?.Groups?.map((e: any) => (
                         <Link key={e.Id} href={`/dashboard/group/${e.Id}`}>
                             <Col xs={24} xl={8} lg={12}>
                                 <CustomCard
@@ -90,7 +90,7 @@ const Groups = () => {
                     style={{ marginTop: 50 }}
                     pageSize={pageSize}
                     current={paginationState.current}
-                    total={groupActibities.Groups?.length}
+                    total={groupActibities?.Groups?.length}
                     onChange={onPageChange}
                 />
             </div>

@@ -40,7 +40,7 @@ const GridView = ({librayActivities}: any) => {
     <div>
       <Row gutter={[16, 16]}>
         {dummyData.map(
-          (e, i) =>
+          (e: any, i: any) =>
             i >= paginationState.minIndex &&
             i < paginationState.maxIndex && (
               <Link key={e.id} href={`/dashboard/activities/${e.Id}`}>

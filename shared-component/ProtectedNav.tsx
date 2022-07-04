@@ -18,7 +18,7 @@ const notifications = (
 );
 
 
-const profile = (logout) => (
+const profile = (logout:any) => (
   <Menu>
     <Menu.Item key="1">
       <Link href="/user" className="nav-text">

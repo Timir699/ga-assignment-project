@@ -4,9 +4,9 @@ import Navbar from '../shared-component/Navbar';
 import ProtectedNav from './ProtectedNav';
 
 const Layout = ({ children }: any) => {
-  const authContext = useContext(AuthContext);
+  const authContext:any = useContext(AuthContext);
 
-  const token = authContext?.authState.token
+  const token = authContext.authState.token
 
   return (
     <div>
