@@ -1,14 +1,15 @@
 import { BookFilled } from '@ant-design/icons';
 import React, { createContext, useEffect, useState } from 'react';
 
-
 const AuthContext = createContext({
     authState: {},
-    setUserAuthInfo: (userInfo: any) => {}, 
-    isUserAuthenticated: ():boolean => false,
+    setUserAuthInfo: (userInfo: any) => {},
+    isUserAuthenticated: (): boolean => false,
     handleLogout: () => {},
 });
 const { Provider } = AuthContext;
+
+console.log('hello');
 
 const AuthProvider = ({ children }: any) => {
     const [authState, setAuthState] = useState({
