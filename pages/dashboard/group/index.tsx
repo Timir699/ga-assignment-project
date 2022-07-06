@@ -1,5 +1,5 @@
 import { Button, Pagination } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import api from '../../../api/index';
 import { Col, Row } from 'antd';
@@ -14,8 +14,13 @@ const Groups = () => {
 
     const [groupActibities, setGroupActibities] = useState<any>();
     const authContext = React.useContext(AuthContext);
+
+    const runOneTime = useRef(true);
+
     useEffect(() => {
-        const tokenStr = localStorage.getItem('token')
+        if (runOneTime.current) {
+            runOneTime.current = false;
+            const tokenStr = localStorage.getItem('token')
             ? localStorage.getItem('token')
             : '';
 
@@ -38,7 +43,10 @@ const Groups = () => {
                     setGroupActibities(data);
                 });
         }
+          
+        }
     }, []);
+    
 
     const pageSize = 3;
 

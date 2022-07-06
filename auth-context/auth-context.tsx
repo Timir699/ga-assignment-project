@@ -1,4 +1,3 @@
-import { BookFilled } from '@ant-design/icons';
 import React, { createContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext({
@@ -8,8 +7,6 @@ const AuthContext = createContext({
     handleLogout: () => {},
 });
 const { Provider } = AuthContext;
-
-console.log('hello');
 
 const AuthProvider = ({ children }: any) => {
     const [authState, setAuthState] = useState({
@@ -22,7 +19,6 @@ const AuthProvider = ({ children }: any) => {
         });
     };
     const handleLogout = async () => {
-        // localStorage.removeItem("bottega_workshop_token");
         localStorage.clear();
         setAuthState({
             token: '',

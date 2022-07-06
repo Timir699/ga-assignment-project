@@ -9,7 +9,6 @@ const MyActivityContent = ({librayActivities}: any) => {
   console.log(librayActivities);
   
   const [isList, setIsList] = useState<boolean>(false);
-  const [activitiesData, setActivitiesData] = useState<boolean>();
 
   return (
     <div>
