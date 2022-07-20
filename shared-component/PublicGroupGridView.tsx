@@ -4,12 +4,11 @@ import CustomCard from './CustomCard';
 import Link from 'next/link';
 
 const PublicGroupGridView = ({ groupsData }: any) => {
-  const publicGroupData = groupsData?.Groups
+  const publicGroupData = groupsData?.Groups;
 
   console.log(publicGroupData?.Groups);
-  
 
-  const pageSize = 5;
+  const pageSize = 6;
 
   const [paginationState, setPaginationState] = useState({
     data: publicGroupData,
