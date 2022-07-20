@@ -1,8 +1,10 @@
 import { Avatar, Breadcrumb, Col, Dropdown, Layout, Menu, Row } from 'antd';
 import Link from 'next/link';
-import React from 'react';
+import React, {useEffect} from 'react';
 import { BellFilled } from '@ant-design/icons';
 import SearchField from './SearchField';
+import { useRouter } from "next/router";
+import { AuthContext } from '../auth-context/auth-context';
 
 const notifications = (
   <Menu>
@@ -14,7 +16,9 @@ const notifications = (
     <Menu.Item key="3">Item 3</Menu.Item>
   </Menu>
 );
-const profile = (
+
+
+const profile = (logout:any) => (
   <Menu>
     <Menu.Item key="1">
       <Link href="/user" className="nav-text">
@@ -22,11 +26,18 @@ const profile = (
       </Link>
     </Menu.Item>
     <Menu.Divider />
-    <Menu.Item key="2">Logout</Menu.Item>
+    <Menu.Item key="2" onClick={logout} >Logout</Menu.Item>
   </Menu>
 );
 
-const ProtectedNav: React.FC = () => (
+const ProtectedNav: React.FC = () => {
+  const router = useRouter();
+  const authContext = React.useContext(AuthContext);
+  const changeLogout = () => {
+    authContext.handleLogout()
+    router.push("/login");
+  }
+return (
   <div
     style={{
       display: 'flex',
@@ -83,7 +94,7 @@ const ProtectedNav: React.FC = () => (
             <Dropdown
               overlayStyle={{ width: '200px', textAlign: 'right' }}
               trigger={['click']}
-              overlay={profile}
+              overlay={profile(changeLogout)}
               placement="bottomRight"
               arrow
             >
@@ -102,6 +113,7 @@ const ProtectedNav: React.FC = () => (
       </div>
     </div>
   </div>
-);
+)
+}
 
 export default ProtectedNav;

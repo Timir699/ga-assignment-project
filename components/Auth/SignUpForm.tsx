@@ -1,7 +1,10 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
-import React from 'react';
+import React , {useState, useEffect} from 'react';
+import api from "../../api/index"
+import Login from "./Login"
+
 
 let SelectOption = [
   { value: 'punaho', label: 'Punaho' },
@@ -9,8 +12,42 @@ let SelectOption = [
 ];
 
 const SignUpForm = () => {
+
+  const [errMsg, setErrMsg] = useState('');
+  const [success, setSuccess] = useState(false);
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+    const obj = {
+      UserName: values.email,
+      FirstName: values.fullName.split(" ",2)[0],
+      LastName: values.fullName.split(" ",2)[1],
+      Email: values.email,
+      Password: values.password,
+      "RoleId": "67d38259-1de5-4434-aaf7-d69fe827109f",
+      "ApplicationId": "e1e0322c-acb0-4a24-958c-23b2ad912a2c",
+      "TenantId": "af3baf1d-7aae-462c-9d1e-051cef459b86"
+     }
+
+    console.log(obj)
+    const response = api.auth.signUp(obj);
+
+    response.then(response => response.data)
+            .then(response => {
+               console.log(response)
+               setSuccess(true);
+               setTimeout(() => {
+                  window.location.href = '/login'
+              }, 3000)
+                
+
+            })
+            .catch(error => {
+              if (error.response?.status === 500) {
+                  setErrMsg("registration failed. email should be unique")
+              }else{
+                setErrMsg("registration failed.")
+              }
+            })
+
   };
 
   const onSecondCityChange = (values: any) => {
@@ -18,9 +55,18 @@ const SignUpForm = () => {
   };
 
   return (
-    <Form
+    <>
+    {success ? (
+        <section>
+            <h1 style={{ color: 'green' }}>Registration Success!</h1>
+        </section>
+    ) : (
+
+    <section>
+       <p  className={errMsg ? "errmsg" : "offscreen"}  style={{ color: 'red' }} aria-live="assertive">{errMsg}</p>
+       <Form
       name="normal_login"
-      className="login-form"
+      className="registration-form"
       initialValues={{
         remember: true,
       }}
@@ -29,11 +75,11 @@ const SignUpForm = () => {
       <Form.Item
         labelCol={{ span: 24 }}
         label="Full Name"
-        name="Full Name"
+        name="fullName"
         rules={[
           {
             required: true,
-            message: 'Please input your Email!',
+            message: 'Please input your Full Name!',
           },
         ]}
       >
@@ -46,7 +92,7 @@ const SignUpForm = () => {
       <Form.Item
         labelCol={{ span: 24 }}
         label="Email"
-        name="Email"
+        name="email"
         rules={[
           {
             required: true,
@@ -63,7 +109,7 @@ const SignUpForm = () => {
       <Form.Item
         labelCol={{ span: 24 }}
         label="School"
-        name="School"
+        name="school"
         rules={[
           {
             required: true,
@@ -87,7 +133,7 @@ const SignUpForm = () => {
       <Form.Item
         labelCol={{ span: 24 }}
         label="Password"
-        name="Password"
+        name="password"
         rules={[
           {
             required: true,
@@ -114,6 +160,9 @@ const SignUpForm = () => {
         {/* Or <a href="">register now!</a> */}
       </Form.Item>
     </Form>
+    </section>
+    )}
+   </>
   );
 };
 

@@ -4,13 +4,16 @@ import CustomCard from './CustomCard';
 import Link from 'next/link';
 
 const PublicGroupGridView = ({ groupsData }: any) => {
-  console.log(groupsData);
+  const publicGroupData = groupsData?.Groups
+
+  console.log(publicGroupData?.Groups);
+  
 
   const pageSize = 5;
 
   const [paginationState, setPaginationState] = useState({
-    data: groupsData,
-    totalPage: groupsData.length / pageSize,
+    data: publicGroupData,
+    totalPage: publicGroupData?.length / pageSize,
     current: 1,
     minIndex: 0,
     maxIndex: 0,
@@ -28,8 +31,8 @@ const PublicGroupGridView = ({ groupsData }: any) => {
   useEffect(() => {
     setPaginationState((prevState) => ({
       ...prevState,
-      groupsData,
-      totalPage: groupsData.length / pageSize,
+      publicGroupData,
+      totalPage: publicGroupData?.length / pageSize,
       minIndex: 0,
       maxIndex: pageSize,
     }));
@@ -38,10 +41,10 @@ const PublicGroupGridView = ({ groupsData }: any) => {
   return (
     <div>
       <Row gutter={[16, 16]}>
-        {groupsData.map(
+        {publicGroupData?.map(
           (e: any, i: any) =>
-            i >= paginationState.minIndex &&
-            i < paginationState.maxIndex && (
+            i >= paginationState?.minIndex &&
+            i < paginationState?.maxIndex && (
               <Link key={e.Id} href={`/library/group/${e.Id}`}>
                 <Col xs={24} xl={6} lg={12}>
                   <CustomCard
@@ -58,8 +61,8 @@ const PublicGroupGridView = ({ groupsData }: any) => {
       <Pagination
         style={{ marginTop: 50 }}
         pageSize={pageSize}
-        current={paginationState.current}
-        total={groupsData.length}
+        current={paginationState?.current}
+        total={publicGroupData?.length}
         onChange={onPageChange}
       />
     </div>

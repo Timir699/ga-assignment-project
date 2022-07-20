@@ -5,9 +5,10 @@ import FilterModal from '../../shared-component/FilterModal';
 import GridView from '../../shared-component/GridView';
 import ListView from '../../shared-component/ListView';
 
-const MyActivityContent = () => {
+const MyActivityContent = ({librayActivities}: any) => {
+  console.log(librayActivities);
+  
   const [isList, setIsList] = useState<boolean>(false);
-  const [activitiesData, setActivitiesData] = useState<boolean>();
 
   return (
     <div>
@@ -27,7 +28,7 @@ const MyActivityContent = () => {
           </span>
         </div>
       </div>
-      {isList ? <ListView /> : <GridView />}
+      {isList ? <ListView /> : <GridView librayActivities={librayActivities} />}
     </div>
   );
 };

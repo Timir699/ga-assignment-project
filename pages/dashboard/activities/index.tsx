@@ -1,10 +1,43 @@
 import { Button } from 'antd';
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import MyActivityContent from '../../../components/ActivityLibrary/MyActivityContent';
 import CreateActivityModal from '../../../components/Modals/CreateActivityModal';
 import JoinActivityModal from '../../../components/Modals/JoinActivityModal';
+import { useRouter } from "next/router";
+import {AuthContext} from "../../../auth-context/auth-context"
+import api from '../../../api';
 
 const Activities = () => {
+
+  const router = useRouter();
+  const authContext = React.useContext(AuthContext);
+  const [librayActivities, setLibrayActivities] = useState([]);
+
+  const runOneTime = useRef(true);
+
+  useEffect(() => {
+      if (runOneTime.current) {
+          runOneTime.current = false;
+          const tokenStr = localStorage.getItem("token") ? localStorage.getItem("token") : ""
+  
+          tokenStr
+          ? console.log("login success")
+          : router.push("/login");
+          if(tokenStr){
+            const tokenObj = typeof tokenStr == "string" && tokenStr != "" ? JSON.parse(tokenStr) : {access_token:""}
+      
+            const response = api.LibraryActivity.getOwnLibraryActivity(tokenObj.access_token)
+            
+            response.then((response) => response.data).then(data => {
+              console.log(data)
+                setLibrayActivities(data)
+            })
+          }
+
+        
+      }
+  }, []);
+
   return (
     <div className="container">
       <div className="mt-12 ml-[5%]">
@@ -20,7 +53,7 @@ const Activities = () => {
       </div>
 
       <div className="mt-12 ml-[5%]">
-        <MyActivityContent />
+        <MyActivityContent librayActivities={librayActivities} />
       </div>
     </div>
   );
