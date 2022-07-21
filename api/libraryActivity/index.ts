@@ -2,13 +2,17 @@ import { baseActivityUrl } from '../api';
 import axios from 'axios';
 import auth from '../auth';
 
-const allLibraryActivity = (pageIndex: number, pageSize: number, data: any) =>
+const allLibraryActivity = (pageIndex: any, pageSize: number, data: any) =>
   axios.post(`${baseActivityUrl}/v1/activity/library`, data, {
     params: {
       pageIndex,
       pageSize,
     },
   });
+
+const activityLibraryDetails = (id: any) => {
+  return axios.get(`${baseActivityUrl}/v1/activity/${id}/settings`);
+};
 
 const getOwnLibraryActivity = (token: any) => {
   const user = auth.userInfo(token);
@@ -29,6 +33,7 @@ const getOwnLibraryActivity = (token: any) => {
 const LibraryActivity = {
   allLibraryActivity,
   getOwnLibraryActivity,
+  activityLibraryDetails,
 };
 
 export default LibraryActivity;

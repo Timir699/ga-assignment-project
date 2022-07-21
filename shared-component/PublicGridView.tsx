@@ -10,18 +10,15 @@ const PublicGridView = (props: any) => {
   const runOneTime = useRef(true);
   const router = useRouter();
 
-  const [pageIndex, setPageIndex] = useState<any>(0);
-
   const pageDataSize = 12;
 
   const [paginationState, setPaginationState] = useState<any>({
     data: null,
     totalDataInPage: pageDataSize,
-    current: pageIndex,
+    current: router.query.pageIndex,
   });
 
   const onPageChange = (page: number) => {
-    setPageIndex(page - 1);
     const response = api.LibraryActivity.allLibraryActivity(
       page - 1,
       12,
@@ -44,12 +41,14 @@ const PublicGridView = (props: any) => {
   const bodyObj = {
     activityType: null,
   };
+  console.log(router.query.pageIndex);
 
   useEffect(() => {
-    if (runOneTime.current) {
+    if (runOneTime.current && router.isReady) {
+      console.log(router.query.pageIndex);
       runOneTime.current = false;
       const response = api.LibraryActivity.allLibraryActivity(
-        pageIndex,
+        router.query.pageIndex,
         12,
         bodyObj
       );
@@ -61,21 +60,25 @@ const PublicGridView = (props: any) => {
             ...prevState,
             data: data,
             totalDataInPage: paginationState?.data?.Count / pageDataSize,
-            current: pageIndex,
+            current: router.query.pageIndex,
             minIndex: 0,
             maxIndex: pageDataSize,
           }));
         });
     }
-  }, []);
+  }, [router.isReady]);
 
   return (
     <div>
       <Row gutter={[16, 16]}>
         {paginationState?.data?.Items?.map((e: any, i: any) => (
-          <Link key={e.id} href={`/library/all/${e.id}`}>
+          <Link key={e.ActivityId} href={`/library/all/${e.ActivityId}`}>
             <Col xs={24} xl={8} lg={12}>
-              <CustomCard name={e.Title} id={e.id} members={e.MemberCount} />
+              <CustomCard
+                name={e.Title}
+                id={e.ActivityId}
+                members={e.MemberCount}
+              />
             </Col>
           </Link>
         ))}
