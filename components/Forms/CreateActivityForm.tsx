@@ -3,9 +3,44 @@ import { Button, Form, Input, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
 import React from 'react';
 
-let SelectOption = [
-  { value: 'punaho', label: 'Punaho' },
-  { value: 'staging', label: 'Staging Root Group' },
+let ActivityType = [
+  { value: 'project', label: 'Project' },
+  { value: 'company', label: 'Company' },
+  { value: 'internship', label: 'Internship' },
+  { value: 'challenge', label: 'Challenge' },
+  { value: 'service', label: 'Service' },
+  { value: 'event', label: 'Event' },
+];
+let groups = [
+  { value: 'stagging', label: 'Stagging Root Group' },
+  { value: 'testing', label: 'Testing sub group of root' },
+];
+let developementGoals = [
+  { value: 'animals', label: 'Animals' },
+  { value: 'clean', label: 'Clean Oceans' },
+  { value: 'climate', label: 'Climate Action' },
+  { value: 'culture', label: 'Culture' },
+  { value: 'gender', label: 'Gender Equality' },
+  { value: 'health', label: 'Health & Wellness' },
+  { value: 'hunger', label: 'Hunger' },
+  { value: 'mental', label: 'Mental Health' },
+  { value: 'partnerShips', label: 'PartnerShips for the goals' },
+  { value: 'peace building', label: 'Peace Building' },
+  { value: 'peace justice', label: 'Peace Justice & Strong Institutions' },
+  { value: 'poverty', label: 'Poverty' },
+  { value: 'quality education', label: 'Quality Education' },
+  { value: 'social entrepreneurship', label: 'Social Entrepreneurship' },
+  { value: 'social justice', label: 'Social Justice' },
+  { value: 'sustainability', label: 'Sustainability' },
+  { value: 'technology', label: 'Technology' },
+];
+let classYear = [
+  { value: '2020', label: '2020' },
+  { value: '2021', label: '2021' },
+  { value: '2022', label: '2022' },
+  { value: '2023', label: '2023' },
+  { value: '2024', label: '2024' },
+  { value: '2025', label: '2025' },
 ];
 
 const CreateActivityForm = () => {
@@ -59,10 +94,10 @@ const CreateActivityForm = () => {
           size="large"
           placeholder="Select Type"
           style={{ maxWidth: 500, borderRadius: '5px' }}
-          value={SelectOption}
+          value={ActivityType}
           onChange={onSecondCityChange}
         >
-          {SelectOption.map((option) => (
+          {ActivityType.map((option) => (
             <Option key={option.value}>{option.label}</Option>
           ))}
         </Select>
@@ -82,10 +117,10 @@ const CreateActivityForm = () => {
           size="large"
           placeholder="Select Group"
           style={{ maxWidth: 500, borderRadius: '5px' }}
-          value={SelectOption}
+          value={groups}
           onChange={onSecondCityChange}
         >
-          {SelectOption.map((option) => (
+          {groups.map((option) => (
             <Option key={option.value}>{option.label}</Option>
           ))}
         </Select>
@@ -107,10 +142,10 @@ const CreateActivityForm = () => {
           size="large"
           placeholder="Enter Goals"
           style={{ maxWidth: 500, borderRadius: '5px' }}
-          value={SelectOption}
+          value={developementGoals}
           onChange={onSecondCityChange}
         >
-          {SelectOption.map((option) => (
+          {developementGoals.map((option) => (
             <Option key={option.value}>{option.label}</Option>
           ))}
         </Select>
@@ -131,10 +166,10 @@ const CreateActivityForm = () => {
           size="large"
           placeholder="Select Class Year"
           style={{ maxWidth: 500, borderRadius: '5px' }}
-          value={SelectOption}
+          value={classYear}
           onChange={onSecondCityChange}
         >
-          {SelectOption.map((option) => (
+          {classYear.map((option) => (
             <Option key={option.value}>{option.label}</Option>
           ))}
         </Select>
