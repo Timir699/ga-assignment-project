@@ -11,7 +11,7 @@ const onFinish = (value: any) => {
 
 const GroupsDetails = () => {
   const router = useRouter();
-  console.log(router.query.Id);
+  console.log(router.query.id);
 
   const [GroupsDetailsData, setGroupsDetailsData] = useState<any>();
 
@@ -20,7 +20,7 @@ const GroupsDetails = () => {
   useEffect(() => {
     if (runOneTime.current) {
       runOneTime.current = false;
-      const response = api.GroupActivity.groupDetails(router.query.Id);
+      const response = api.GroupActivity.groupDetails(router.query.id);
 
       response
         .then((res: any) => res.data)
@@ -29,7 +29,6 @@ const GroupsDetails = () => {
         });
     }
   }, []);
-  console.log(GroupsDetailsData?.Properties?.keys);
 
   return (
     <div className="container">
