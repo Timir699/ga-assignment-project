@@ -1,6 +1,7 @@
 import { Button, Form, Modal, Radio, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import api from '../../api';
 
 const options = [
   {
@@ -26,6 +27,47 @@ const JoinActivityModal: React.FC = () => {
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
   };
+  const handleChange = (value: any) => {
+    console.log('search ---' + value);
+    const tokenStr = localStorage.getItem('token')
+      ? localStorage.getItem('token')
+      : '';
+    if (tokenStr) {
+      const tokenObj =
+        typeof tokenStr == 'string' && tokenStr != ''
+          ? JSON.parse(tokenStr)
+          : { access_token: '' };
+
+      const response = api.LibraryActivity.joinActivitySearch(
+        tokenObj.access_token,
+        value
+      );
+
+      response
+        .then((response) => response?.data)
+        .then((data) => {
+          console.log(data);
+          setOptions(data);
+        });
+    }
+  };
+
+  const [options, setOptions] = useState<any>();
+
+  const runOneTime = useRef(true);
+  useEffect(() => {
+    if (runOneTime.current) {
+      runOneTime.current = false;
+
+      // const response = api.LibraryActivity.joinActivitySearch();
+
+      // response
+      //   .then((res: any) => res.data)
+      //   .then((data: any) => {
+      //     setOptions(data);
+      //   });
+    }
+  }, []);
 
   return (
     <>
@@ -67,8 +109,9 @@ const JoinActivityModal: React.FC = () => {
               placeholder="Select an activity"
               showSearch={true}
               optionFilterProp="children"
+              onSearch={handleChange}
             >
-              {options.map((option) => (
+              {options?.map((option: any) => (
                 <Option key={option.id}>{option.name}</Option>
               ))}
             </Select>
