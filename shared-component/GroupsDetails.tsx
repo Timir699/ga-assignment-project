@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form, Input, Layout, Menu } from 'antd';
+import { useRouter } from 'next/router';
+import api from '../api';
 
 const { Header, Sider, Content } = Layout;
 
@@ -8,6 +10,27 @@ const onFinish = (value: any) => {
 };
 
 const GroupsDetails = () => {
+  const router = useRouter();
+  console.log(router.query.Id);
+
+  const [GroupsDetailsData, setGroupsDetailsData] = useState<any>();
+
+  const runOneTime = useRef(true);
+
+  useEffect(() => {
+    if (runOneTime.current) {
+      runOneTime.current = false;
+      const response = api.GroupActivity.groupDetails(router.query.Id);
+
+      response
+        .then((res: any) => res.data)
+        .then((data: any) => {
+          setGroupsDetailsData(data);
+        });
+    }
+  }, []);
+  console.log(GroupsDetailsData?.Properties?.keys);
+
   return (
     <div className="container">
       <>
@@ -18,7 +41,7 @@ const GroupsDetails = () => {
               <div>
                 <div className="h-48 w-48 bg-slate-300 rounded-md"></div>
               </div>
-              <h2 className="mt-8">Profile Settings</h2>
+              {/* <h2 className="mt-8">Profile Settings</h2>
               <Menu
                 theme="light"
                 mode="inline"
@@ -29,7 +52,7 @@ const GroupsDetails = () => {
                     label: 'Personal Info',
                   },
                 ]}
-              />
+              /> */}
             </Sider>
             <Layout>
               <Header
@@ -37,78 +60,21 @@ const GroupsDetails = () => {
               >
                 <div className="flex justify-between">
                   <div>
-                    <h2>Boss osm</h2>
-                    <h4>location: Dhaka</h4>
+                    <h2 className="text-3xl">{GroupsDetailsData?.Title}</h2>
+                    <h4 className="text-2xl">
+                      {GroupsDetailsData?.Owner?.Name}
+                    </h4>
                   </div>
                   <div className="mt-24">
-                    <Button>Preview</Button>
+                    {/* <Button>Preview</Button>
                     <Button htmlType="submit" className="ml-4" type="primary">
                       Update
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </Header>
               <Content style={{ background: '#fff', padding: '20px' }}>
-                <Form
-                  name="normal_login"
-                  className="login-form"
-                  initialValues={{
-                    remember: true,
-                  }}
-                  onFinish={onFinish}
-                >
-                  <div className="flex">
-                    <Form.Item
-                      labelCol={{ span: 24 }}
-                      label="First Name"
-                      name="First Name"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please input your First Name!',
-                        },
-                      ]}
-                    >
-                      <Input
-                        size="large"
-                        style={{ maxWidth: 250, borderRadius: '5px' }}
-                        placeholder="First Name"
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      labelCol={{ span: 24 }}
-                      label="Last Name"
-                      name="Last Name"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please input your Last Name!',
-                        },
-                      ]}
-                    >
-                      <Input
-                        size="large"
-                        style={{ maxWidth: 250, borderRadius: '5px' }}
-                        placeholder="First Name"
-                      />
-                    </Form.Item>
-                  </div>
-
-                  <Form.Item
-                    labelCol={{ span: 24 }}
-                    label="One-liner Caption about You"
-                    name="About"
-                  >
-                    <Input
-                      size="large"
-                      style={{ maxWidth: 500 }}
-                      placeholder="Type Here"
-                    />
-                  </Form.Item>
-                  <Button htmlType="submit" className="ml-4" type="primary">
-                    Update
-                  </Button>
-                </Form>
+                <h2>Description: </h2>
               </Content>
             </Layout>
           </Layout>
