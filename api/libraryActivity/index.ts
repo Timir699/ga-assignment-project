@@ -39,10 +39,16 @@ const getOwnLibraryActivity = (token: any) => {
   return user.then((data) => {
     console.log(data.data.UserId);
     const actvities = axios.get(
-      `https://api-globalalohaservice-dev.saams.xyz/v1/activity/recent`,
+      `https://api-globalalohaservice-dev.saams.xyz/v1/activity/user/${data.data.UserId}/activity`,
       {
         params: {
-          userid: data.data.UserId,
+          pageIndex: 0,
+          pageSize: 12,
+          filterActivityType: -1,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          deviceid: 123456,
         },
       }
     );

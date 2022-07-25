@@ -2,14 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Col, Pagination, Row } from 'antd';
 import CustomCard from './CustomCard';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const GridView = ({ librayActivities }: any) => {
-  const dummyData = librayActivities;
+  console.log(librayActivities.Items);
+  const router = useRouter();
+  console.log(router.query.pageIndex);
+
+  const dummyData = librayActivities?.Items;
   const pageSize = 12;
 
   const [paginationState, setPaginationState] = useState({
     data: dummyData,
-    totalPage: dummyData.length / pageSize,
+    totalPage: dummyData?.length / pageSize,
     current: 1,
     minIndex: 0,
     maxIndex: 0,
@@ -28,7 +33,7 @@ const GridView = ({ librayActivities }: any) => {
     setPaginationState((prevState) => ({
       ...prevState,
       dummyData,
-      totalPage: dummyData.length / pageSize,
+      totalPage: dummyData?.length / pageSize,
       minIndex: 0,
       maxIndex: pageSize,
     }));
@@ -36,7 +41,7 @@ const GridView = ({ librayActivities }: any) => {
   return (
     <div>
       <Row gutter={[16, 16]}>
-        {dummyData.map(
+        {dummyData?.map(
           (e: any, i: any) =>
             i >= paginationState.minIndex &&
             i < paginationState.maxIndex && (
@@ -55,8 +60,8 @@ const GridView = ({ librayActivities }: any) => {
       <Pagination
         style={{ marginTop: 50 }}
         pageSize={pageSize}
-        current={paginationState.current}
-        total={dummyData.length}
+        current={paginationState?.current}
+        total={dummyData?.length}
         onChange={onPageChange}
       />
     </div>
