@@ -2,20 +2,13 @@ import { Button, Form, Modal, Radio, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
 import React, { useEffect, useRef, useState } from 'react';
 import api from '../../api';
-
-const options = [
-  {
-    name: 'hello',
-    id: '1',
-  },
-  {
-    name: 'abc',
-    id: '2',
-  },
-];
+import useDebounce from '../../hooks/useDebounce';
 
 const JoinActivityModal: React.FC = () => {
+  const { debouncedValue: debouncedSearchTerm, setSearchQuery } =
+    useDebounce(500);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [options, setOptions] = useState<any>();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -28,6 +21,7 @@ const JoinActivityModal: React.FC = () => {
     console.log('Received values of form: ', values);
   };
   const handleChange = (value: any) => {
+    setSearchQuery(value);
     console.log('search ---' + value);
     const tokenStr = localStorage.getItem('token')
       ? localStorage.getItem('token')
@@ -52,8 +46,6 @@ const JoinActivityModal: React.FC = () => {
     }
   };
 
-  const [options, setOptions] = useState<any>();
-
   const runOneTime = useRef(true);
   useEffect(() => {
     if (runOneTime.current) {
@@ -68,6 +60,12 @@ const JoinActivityModal: React.FC = () => {
       //   });
     }
   }, []);
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      handleChange(debouncedSearchTerm);
+    } else if (debouncedSearchTerm === '') {
+    }
+  }, [debouncedSearchTerm]);
 
   return (
     <>
@@ -109,7 +107,9 @@ const JoinActivityModal: React.FC = () => {
               placeholder="Select an activity"
               showSearch={true}
               optionFilterProp="children"
-              onSearch={handleChange}
+              onSearch={(value) => {
+                setSearchQuery(value);
+              }}
             >
               {options?.map((option: any) => (
                 <Option key={option.id}>{option.name}</Option>

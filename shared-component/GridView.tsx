@@ -3,12 +3,9 @@ import { Col, Pagination, Row } from 'antd';
 import CustomCard from './CustomCard';
 import Link from 'next/link';
 
-
-
-const GridView = ({librayActivities}: any) => {
-
+const GridView = ({ librayActivities }: any) => {
   const dummyData = librayActivities;
-  const pageSize = 3;
+  const pageSize = 12;
 
   const [paginationState, setPaginationState] = useState({
     data: dummyData,
@@ -45,7 +42,11 @@ const GridView = ({librayActivities}: any) => {
             i < paginationState.maxIndex && (
               <Link key={e.id} href={`/dashboard/activities/${e.Id}`}>
                 <Col xs={24} xl={8} lg={12}>
-                  <CustomCard name={e.Title} id={e.Id} ManagerName={e.ManagerName} />
+                  <CustomCard
+                    name={e.Title}
+                    id={e.Id}
+                    ManagerName={e.ManagerName}
+                  />
                 </Col>
               </Link>
             )

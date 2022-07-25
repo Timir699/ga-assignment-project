@@ -35,7 +35,7 @@ const getOwnLibraryActivity = (token: any) => {
   return user.then((data) => {
     console.log(data.data.UserId);
     const actvities = axios.get(
-      `https://api-globalalohaservice-dev.saams.xyz/V1/activity/recent`,
+      `https://api-globalalohaservice-dev.saams.xyz/v1/activity/recent`,
       {
         params: {
           userid: data.data.UserId,
