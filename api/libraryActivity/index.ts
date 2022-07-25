@@ -19,10 +19,14 @@ const joinActivitySearch = (token: any, SearchQuery: any) => {
   return user.then((data) => {
     console.log(data.data.UserId);
     const activitySearch = axios.get(
-      `${baseActivityUrl}/V1/activity/user/${data.data.UserId}/search-for-join-request`,
+      `${baseActivityUrl}/v1/activity/user/${data.data.UserId}/search-for-join-request`,
       {
         params: {
           searchTerm: SearchQuery,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          deviceid: 123456,
         },
       }
     );

@@ -8,7 +8,8 @@ const JoinActivityModal: React.FC = () => {
   const { debouncedValue: debouncedSearchTerm, setSearchQuery } =
     useDebounce(500);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [options, setOptions] = useState<any>();
+  const [options, setOptions] = useState([]);
+  const [selectedItems, setSelectedItems] = useState();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -21,7 +22,6 @@ const JoinActivityModal: React.FC = () => {
     console.log('Received values of form: ', values);
   };
   const handleChange = (value: any) => {
-    setSearchQuery(value);
     console.log('search ---' + value);
     const tokenStr = localStorage.getItem('token')
       ? localStorage.getItem('token')
@@ -40,30 +40,18 @@ const JoinActivityModal: React.FC = () => {
       response
         .then((response) => response?.data)
         .then((data) => {
-          console.log(data);
           setOptions(data);
         });
     }
   };
 
   const runOneTime = useRef(true);
-  useEffect(() => {
-    if (runOneTime.current) {
-      runOneTime.current = false;
 
-      // const response = api.LibraryActivity.joinActivitySearch();
-
-      // response
-      //   .then((res: any) => res.data)
-      //   .then((data: any) => {
-      //     setOptions(data);
-      //   });
-    }
-  }, []);
   useEffect(() => {
     if (debouncedSearchTerm) {
       handleChange(debouncedSearchTerm);
     } else if (debouncedSearchTerm === '') {
+      handleChange(debouncedSearchTerm);
     }
   }, [debouncedSearchTerm]);
 
@@ -112,7 +100,7 @@ const JoinActivityModal: React.FC = () => {
               }}
             >
               {options?.map((option: any) => (
-                <Option key={option.id}>{option.name}</Option>
+                <Option key={option.ActivityId}>{option.Name}</Option>
               ))}
             </Select>
           </Form.Item>
