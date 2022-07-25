@@ -9,7 +9,7 @@ const JoinActivityModal: React.FC = () => {
     useDebounce(500);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [options, setOptions] = useState([]);
-  const [selectedItems, setSelectedItems] = useState();
+  const [roles, setRoles] = useState([]);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -19,13 +19,42 @@ const JoinActivityModal: React.FC = () => {
     setIsModalVisible(false);
   };
   const onFinish = (values: any) => {
+    console.log(values);
+
+    const payload = {
+      activityId: values.activity,
+      Roles: [values.role],
+    };
     console.log('Received values of form: ', values);
+    const tokenStr = localStorage.getItem('token')
+      ? localStorage.getItem('token')
+      : '';
+
+    if (tokenStr) {
+      const tokenObj =
+        typeof tokenStr == 'string' && tokenStr != ''
+          ? JSON.parse(tokenStr)
+          : { access_token: '' };
+
+      const response = api.LibraryActivity.joinLibrary(
+        tokenObj.access_token,
+        payload
+      );
+
+      response
+        .then((response) => response?.data)
+        .then((data) => {
+          setOptions(data);
+        });
+    }
   };
+
   const handleChange = (value: any) => {
     console.log('search ---' + value);
     const tokenStr = localStorage.getItem('token')
       ? localStorage.getItem('token')
       : '';
+
     if (tokenStr) {
       const tokenObj =
         typeof tokenStr == 'string' && tokenStr != ''
@@ -54,6 +83,18 @@ const JoinActivityModal: React.FC = () => {
       handleChange(debouncedSearchTerm);
     }
   }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    const response = api.LibraryActivity.getActivityRoles();
+
+    response
+      .then((response) => response?.data)
+      .then((data) => {
+        setRoles(data);
+      });
+  }, []);
+
+  console.log(options);
 
   return (
     <>
@@ -116,10 +157,11 @@ const JoinActivityModal: React.FC = () => {
             ]}
           >
             <Radio.Group>
-              <Radio value={'volunteer'}>Volunteer</Radio>
-              <Radio value={'project-manager'}>Project Manager</Radio>
-              <Radio value={'observer'}>Observer</Radio>
-              <Radio value={'mentor'}>Mentor</Radio>
+              {roles?.map((role: any) => (
+                <Radio key={role.Id} value={role.Id}>
+                  {role.RoleName}
+                </Radio>
+              ))}
             </Radio.Group>
           </Form.Item>
         </Form>
