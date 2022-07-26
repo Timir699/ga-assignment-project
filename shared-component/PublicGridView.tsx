@@ -34,7 +34,10 @@ const PublicGridView = () => {
         }));
       });
 
-    router.push({ pathname: '/library/all', query: { pageIndex: page - 1 } });
+    router.push({
+      pathname: '/library/all',
+      query: { pageIndex: page - 1, pageSize: 12 },
+    });
   };
 
   const bodyObj = {

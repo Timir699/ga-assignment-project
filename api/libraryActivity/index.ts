@@ -46,7 +46,7 @@ const getOwnLibraryActivity = (token: any, page: any, pageSize: any) => {
       `https://api-globalalohaservice-dev.saams.xyz/v1/activity/user/${data.data.UserId}/activity`,
       {
         params: {
-          pageIndex: page - 1,
+          pageIndex: page,
           pageSize: pageSize,
         },
         headers: {

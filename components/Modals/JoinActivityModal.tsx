@@ -1,7 +1,7 @@
 import { Button, Form, Modal, Radio, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
 import { AnyNaptrRecord } from 'dns';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import api from '../../api';
 import useDebounce from '../../hooks/useDebounce';
 
@@ -98,7 +98,7 @@ const JoinActivityModal: React.FC = () => {
   console.log(options);
 
   return (
-    <>
+    <Suspense fallback={<h1>loading</h1>}>
       <Button type="primary" onClick={showModal}>
         Join Activity
       </Button>
@@ -171,7 +171,7 @@ const JoinActivityModal: React.FC = () => {
           </Form.Item>
         </Form>
       </Modal>
-    </>
+    </Suspense>
   );
 };
 

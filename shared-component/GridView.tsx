@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, Suspense } from 'react';
 import { Col, Pagination, Row } from 'antd';
 import CustomCard from './CustomCard';
 import Link from 'next/link';
@@ -30,7 +30,7 @@ const GridView = () => {
 
       const response = api.LibraryActivity.getOwnLibraryActivity(
         tokenObj.access_token,
-        page,
+        page - 1,
         12
       );
       response
@@ -89,7 +89,7 @@ const GridView = () => {
   console.log(paginationState?.data?.Items);
 
   return (
-    <div>
+    <Suspense fallback={<h1>loading</h1>}>
       <Row gutter={[16, 16]}>
         {paginationState?.data?.Items?.map((e: any, i: any) => (
           <Link key={e.Id} href={`/dashboard/activities/${e.Id}`}>
@@ -110,7 +110,7 @@ const GridView = () => {
         total={paginationState?.data?.Count}
         onChange={onPageChange}
       />
-    </div>
+    </Suspense>
   );
 };
 export default GridView;
