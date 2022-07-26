@@ -11,7 +11,6 @@ const Groups = () => {
   const router = useRouter();
 
   const [groupActibities, setGroupActibities] = useState<any>();
-  const authContext = React.useContext(AuthContext);
 
   const runOneTime = useRef(true);
 

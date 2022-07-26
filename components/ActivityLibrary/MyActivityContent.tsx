@@ -5,9 +5,7 @@ import FilterModal from '../../shared-component/FilterModal';
 import GridView from '../../shared-component/GridView';
 import ListView from '../../shared-component/ListView';
 
-const MyActivityContent = ({librayActivities}: any) => {
-  console.log(librayActivities);
-  
+const MyActivityContent = () => {
   const [isList, setIsList] = useState<boolean>(false);
 
   return (
@@ -15,7 +13,7 @@ const MyActivityContent = ({librayActivities}: any) => {
       <div className="flex justify-between">
         <div>
           <h3 style={{ color: '#262262', fontWeight: 900 }} className="text-xl">
-            Activity Library
+            My Activity Library
           </h3>
         </div>
         <div>
@@ -28,7 +26,7 @@ const MyActivityContent = ({librayActivities}: any) => {
           </span>
         </div>
       </div>
-      {isList ? <ListView /> : <GridView librayActivities={librayActivities} />}
+      {isList ? <ListView /> : <GridView />}
     </div>
   );
 };

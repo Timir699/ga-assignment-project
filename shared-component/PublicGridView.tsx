@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Col, Pagination, Row } from 'antd';
 import CustomCard from './CustomCard';
 import Link from 'next/link';
-import type { PaginationProps } from 'antd';
 import api from '../api';
 import { useRouter } from 'next/router';
 
-const PublicGridView = (props: any) => {
+const PublicGridView = () => {
   const runOneTime = useRef(true);
   const router = useRouter();
 

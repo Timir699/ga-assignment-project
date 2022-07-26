@@ -38,7 +38,7 @@ const getActivityRoles = () => {
   return axios.get(`${baseActivityUrl}/v1/activity/activityroles`);
 };
 
-const getOwnLibraryActivity = (token: any) => {
+const getOwnLibraryActivity = (token: any, page: any, pageSize: any) => {
   const user = auth.userInfo(token);
   return user.then((data) => {
     console.log(data.data.UserId);
@@ -46,9 +46,8 @@ const getOwnLibraryActivity = (token: any) => {
       `https://api-globalalohaservice-dev.saams.xyz/v1/activity/user/${data.data.UserId}/activity`,
       {
         params: {
-          pageIndex: 0,
-          pageSize: 12,
-          filterActivityType: -1,
+          pageIndex: page - 1,
+          pageSize: pageSize,
         },
         headers: {
           Authorization: `Bearer ${token}`,

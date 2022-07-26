@@ -1,5 +1,6 @@
 import { Button, Form, Modal, Radio, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
+import { AnyNaptrRecord } from 'dns';
 import React, { useEffect, useRef, useState } from 'react';
 import api from '../../api';
 import useDebounce from '../../hooks/useDebounce';
@@ -8,7 +9,7 @@ const JoinActivityModal: React.FC = () => {
   const { debouncedValue: debouncedSearchTerm, setSearchQuery } =
     useDebounce(500);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState<AnyNaptrRecord[]>([]);
   const [roles, setRoles] = useState([]);
 
   const showModal = () => {
@@ -140,9 +141,13 @@ const JoinActivityModal: React.FC = () => {
                 setSearchQuery(value);
               }}
             >
-              {options?.map((option: any) => (
-                <Option key={option.ActivityId}>{option.Name}</Option>
-              ))}
+              {options
+                ? options?.map((option: any) => (
+                    <Option value={option.ActivityId} key={option.ActivityId}>
+                      {option.Name}
+                    </Option>
+                  ))
+                : null}
             </Select>
           </Form.Item>
           <Form.Item
