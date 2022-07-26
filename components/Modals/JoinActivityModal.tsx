@@ -19,9 +19,8 @@ const JoinActivityModal: React.FC = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  const onFinish = (values: any) => {
-    console.log(values);
 
+  const onFinish = (values: any) => {
     const payload = {
       activityId: values.activity,
       Roles: [values.role],
@@ -48,6 +47,7 @@ const JoinActivityModal: React.FC = () => {
           setOptions(data);
         });
     }
+    setIsModalVisible(false);
   };
 
   const handleChange = (value: any) => {
@@ -86,13 +86,15 @@ const JoinActivityModal: React.FC = () => {
   }, [debouncedSearchTerm]);
 
   useEffect(() => {
-    const response = api.LibraryActivity.getActivityRoles();
-
-    response
-      .then((response) => response?.data)
-      .then((data) => {
-        setRoles(data);
-      });
+    if (runOneTime.current) {
+      runOneTime.current = false;
+      const response = api.LibraryActivity.getActivityRoles();
+      response
+        .then((response) => response?.data)
+        .then((data) => {
+          setRoles(data);
+        });
+    }
   }, []);
 
   console.log(options);
