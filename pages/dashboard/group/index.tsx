@@ -1,16 +1,20 @@
-import { Button, Pagination } from 'antd';
+import { Button, Modal, Pagination } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import api from '../../../api/index';
 import { Col, Row } from 'antd';
 import CustomCard from '../../../shared-component/CustomCard';
 import Link from 'next/link';
-import { AuthContext } from '../../../auth-context/auth-context';
+
+import JoinGroupModal from '../../../shared-component/JoinGroupModal';
+import CreateGroupModal from '../../../shared-component/CreateGroupModal';
 
 const Groups = () => {
   const router = useRouter();
 
   const [groupActibities, setGroupActibities] = useState<any>();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isJoinModalVisible, setJoinIsModalVisible] = useState(false);
 
   const runOneTime = useRef(true);
 
@@ -61,13 +65,51 @@ const Groups = () => {
     }));
   };
 
+  const showJoinModal = () => {
+    setJoinIsModalVisible(true);
+  };
+  const joinModalHandleOk = () => {
+    setJoinIsModalVisible(false);
+  };
+  const joinModalHandleCancel = () => {
+    setJoinIsModalVisible(false);
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <div className="container">
       <div className="mt-12 ml-[5%]">
         <h3 className="text-xl text-indigo-900 bold font-bold">My Groups</h3>
         <p className="text-slate-400">Classes, Clubs, Organizations & More!</p>
-        <Button type="primary">Join Group</Button>
-        <Button className="ml-4">Create a Group</Button>
+        <JoinGroupModal
+          setJoinIsModalVisible={setJoinIsModalVisible}
+          handleOk={joinModalHandleOk}
+          handleCancel={joinModalHandleCancel}
+          isModalVisible={isJoinModalVisible}
+        />
+        <CreateGroupModal
+          handleOk={handleOk}
+          handleCancel={handleCancel}
+          isModalVisible={isModalVisible}
+        />
+        <Button type="primary" onClick={showJoinModal}>
+          Join Group
+        </Button>
+
+        <Button className="ml-4" onClick={showModal}>
+          Create a Group
+        </Button>
       </div>
       <div className="mt-12 ml-[5%]">
         <h2>Group List</h2>

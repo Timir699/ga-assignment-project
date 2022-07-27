@@ -84,9 +84,6 @@ const UserDetails = () => {
                   </div>
                   <div className="mt-24">
                     <Button>Preview</Button>
-                    <Button htmlType="submit" className="ml-4" type="primary">
-                      Update
-                    </Button>
                   </div>
                 </div>
               </Header>

@@ -1,29 +1,21 @@
-import { Button, Form, Modal, Radio, Select } from 'antd';
+import { Form, Modal, Radio, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
-import { AnyNaptrRecord } from 'dns';
-import React, { Suspense, useEffect, useRef, useState } from 'react';
-import api from '../../api';
-import useDebounce from '../../hooks/useDebounce';
+import React, { useEffect, useRef, useState } from 'react';
+import api from '../api';
+import useDebounce from '../hooks/useDebounce';
 
-const JoinActivityModal: React.FC = () => {
-  const { debouncedValue: debouncedSearchTerm, setSearchQuery } =
-    useDebounce(500);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+const JoinGroupModal = (props: any) => {
   const [options, setOptions] = useState<any>([]);
   const [roles, setRoles] = useState([]);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  const { debouncedValue: debouncedSearchTerm, setSearchQuery } =
+    useDebounce(500);
 
   const onFinish = (values: any) => {
+    console.log(values);
+
     const payload = {
-      activityId: values.activity,
-      Roles: [values.role],
+      groupId: values.group,
+      roles: [values.role],
     };
     console.log('Received values of form: ', values);
     const tokenStr = localStorage.getItem('token')
@@ -36,7 +28,7 @@ const JoinActivityModal: React.FC = () => {
           ? JSON.parse(tokenStr)
           : { access_token: '' };
 
-      const response = api.LibraryActivity.joinLibrary(
+      const response = api.GroupActivity.joinGroup(
         tokenObj.access_token,
         payload
       );
@@ -47,7 +39,7 @@ const JoinActivityModal: React.FC = () => {
           setOptions(data);
         });
     }
-    setIsModalVisible(false);
+    props.setJoinIsModalVisible(false);
   };
 
   const handleChange = (value: any) => {
@@ -62,7 +54,7 @@ const JoinActivityModal: React.FC = () => {
           ? JSON.parse(tokenStr)
           : { access_token: '' };
 
-      const response = api.LibraryActivity.joinActivitySearch(
+      const response = api.GroupActivity.joinGroupSearch(
         tokenObj.access_token,
         value
       );
@@ -70,12 +62,25 @@ const JoinActivityModal: React.FC = () => {
       response
         .then((response) => response?.data)
         .then((data) => {
+          console.log(data);
           setOptions(data);
         });
     }
   };
 
   const runOneTime = useRef(true);
+
+  useEffect(() => {
+    if (runOneTime.current) {
+      runOneTime.current = false;
+      const response = api.GroupActivity.groupRoles();
+      response
+        .then((response) => response?.data)
+        .then((data) => {
+          setRoles(data);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
@@ -85,37 +90,20 @@ const JoinActivityModal: React.FC = () => {
     }
   }, [debouncedSearchTerm]);
 
-  useEffect(() => {
-    if (runOneTime.current) {
-      runOneTime.current = false;
-      const response = api.LibraryActivity.getActivityRoles();
-      response
-        .then((response) => response?.data)
-        .then((data) => {
-          setRoles(data);
-        });
-    }
-  }, []);
-
-  console.log(options);
-
   return (
-    <Suspense fallback={<h1>loading</h1>}>
-      <Button type="primary" onClick={showModal}>
-        Join Activity
-      </Button>
+    <div>
       <Modal
-        title="Join an activity"
-        visible={isModalVisible}
-        okButtonProps={{ form: 'joinActivityForm', htmlType: 'submit' }}
-        onCancel={handleCancel}
-        cancelButtonProps={{ style: { display: 'none' } }}
+        title="Join a Group"
+        visible={props.isModalVisible}
+        onCancel={props.handleCancel}
         okText="Join"
         destroyOnClose={true}
+        okButtonProps={{ form: 'joinGroupForm', htmlType: 'submit' }}
+        cancelButtonProps={{ style: { display: 'none' } }}
       >
         <Form
-          id="joinActivityForm"
-          name="join-activity-form"
+          id="joinGroupForm"
+          name="join-group-form"
           initialValues={{
             remember: false,
           }}
@@ -123,12 +111,12 @@ const JoinActivityModal: React.FC = () => {
         >
           <Form.Item
             labelCol={{ span: 24 }}
-            label="Activity"
-            name="activity"
+            label="Group"
+            name="group"
             rules={[
               {
                 required: true,
-                message: 'Please select an activity!',
+                message: 'Please select a group!',
               },
             ]}
           >
@@ -136,7 +124,7 @@ const JoinActivityModal: React.FC = () => {
               style={{ width: '100%' }}
               allowClear
               size="large"
-              placeholder="Select an activity"
+              placeholder="Select a group"
               showSearch={true}
               optionFilterProp="children"
               onSearch={(value) => {
@@ -145,8 +133,8 @@ const JoinActivityModal: React.FC = () => {
             >
               {options
                 ? options?.map((option: any) => (
-                    <Option value={option.ActivityId} key={option.ActivityId}>
-                      {option.Name}
+                    <Option value={option.Id} key={option.Id}>
+                      {option.Title}
                     </Option>
                   ))
                 : null}
@@ -173,8 +161,8 @@ const JoinActivityModal: React.FC = () => {
           </Form.Item>
         </Form>
       </Modal>
-    </Suspense>
+    </div>
   );
 };
 
-export default JoinActivityModal;
+export default JoinGroupModal;
