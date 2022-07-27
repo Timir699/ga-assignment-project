@@ -48,6 +48,23 @@ const joinGroupSearch = (token: any, SearchQuery: any) => {
   return activitySearch;
 };
 
+const masterGroupSearch = (token: any, SearchQuery: any) => {
+  const user = auth.userInfo(token);
+  return user.then((data) => {
+    console.log(data.data.UserId);
+    const masterSearch = axios.get(`${baseGroupUrl}/api/v1/group/search`, {
+      params: {
+        searchTerm: SearchQuery,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        deviceid: 123456,
+      },
+    });
+    return masterSearch;
+  });
+};
+
 const joinGroup = (token: any, data: any) => {
   const groupId = [data.groupId];
   const roles = data.roles;
@@ -66,6 +83,23 @@ const joinGroup = (token: any, data: any) => {
     return joinInGroup;
   });
 };
+const createGroup = (token: any, data: any) => {
+  const payload = data;
+  const user = auth.userInfo(token);
+  return user.then((data) => {
+    console.log(data.data.UserId);
+    const createInGroup = axios.post(`${baseGroupUrl}/api/v1/group`, payload, {
+      params: {
+        userid: data.data.UserId,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        deviceid: 123456,
+      },
+    });
+    return createInGroup;
+  });
+};
 
 const GroupActivity = {
   getOwnGroupList,
@@ -74,6 +108,8 @@ const GroupActivity = {
   groupRoles,
   joinGroupSearch,
   joinGroup,
+  masterGroupSearch,
+  createGroup,
 };
 
 export default GroupActivity;
