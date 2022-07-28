@@ -1,13 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Form, Input, Layout, Menu, Select } from 'antd';
+import { Button, DatePicker, Form, Input, Layout, Menu, Select } from 'antd';
 import { useRouter } from 'next/router';
 import api from '../../api';
 import { Option } from 'antd/lib/mentions';
+import { COUNTRIES } from '../data/Countrys';
+import { TIMEZONES } from '../data/TimeZone';
+import moment from 'moment';
 
 const { Header, Sider, Content } = Layout;
 
+const dateFormat = 'YYYY/MM/DD';
+const today = moment();
+
 const onFinish = (value: any) => {
-  console.log(value);
+  console.log(value.date);
+  let completeDate = new Date(value.date);
+  console.log(completeDate);
 };
 
 const UserDetails = () => {
@@ -46,7 +54,16 @@ const UserDetails = () => {
     console.log(value);
   };
 
+  const [placement, SetPlacement] = useState();
+
+  const placementChange = (e: any) => {
+    console.log(e._d);
+
+    // SetPlacement(e.target.value);
+  };
+
   console.log(userData);
+  const today = moment();
 
   return (
     <div className="container">
@@ -200,11 +217,14 @@ const UserDetails = () => {
                     >
                       <Select
                         labelInValue
-                        defaultValue={{ value: 'lucy', label: 'Lucy (101)' }}
+                        // defaultValue={}
                         style={{ width: 300 }}
                       >
-                        <Option value="jack">Jack (100)</Option>
-                        <Option value="lucy">Lucy (101)</Option>
+                        {COUNTRIES.map((country) => (
+                          <Option key={country.code} value={country.code}>
+                            {country.name}
+                          </Option>
+                        ))}
                       </Select>
                     </Form.Item>
                   </div>
@@ -216,12 +236,31 @@ const UserDetails = () => {
                     >
                       <Select
                         labelInValue
-                        defaultValue={{ value: 'lucy', label: 'Lucy (101)' }}
+                        // defaultValue={}
+                        defaultValue={moment()}
                         style={{ width: 300 }}
                       >
-                        <Option value="jack">Jack (100)</Option>
-                        <Option value="lucy">Lucy (101)</Option>
+                        {TIMEZONES.map((timezone) => (
+                          <Option
+                            key={timezone.timeZoneId.toString()}
+                            value={timezone.value.toString()}
+                          >
+                            {timezone.text}
+                          </Option>
+                        ))}
                       </Select>
+                    </Form.Item>
+                    <Form.Item
+                      labelCol={{ span: 24 }}
+                      label="Birrthday"
+                      name="date"
+                    >
+                      <DatePicker
+                        format={dateFormat}
+                        onChange={placementChange}
+                        placement={placement}
+                        defaultValue={moment()}
+                      />
                     </Form.Item>
                   </div>
                   <Button htmlType="submit" className="ml-4" type="primary">

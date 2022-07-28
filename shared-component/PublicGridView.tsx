@@ -23,9 +23,10 @@ const PublicGridView = () => {
       12,
       bodyObj
     );
+
     response
-      .then((response) => response.data)
-      .then((data) => {
+      .then((response: any) => response.data)
+      .then((data: any) => {
         setPaginationState((prevState: any) => ({
           ...prevState,
           data: data,
@@ -43,7 +44,6 @@ const PublicGridView = () => {
   const bodyObj = {
     activityType: null,
   };
-  console.log(router.query.pageIndex);
 
   useEffect(() => {
     if (runOneTime.current && router.isReady) {
@@ -56,8 +56,8 @@ const PublicGridView = () => {
       );
 
       response
-        .then((response) => response.data)
-        .then((data) => {
+        .then((response: any) => response.data)
+        .then((data: any) => {
           setPaginationState((prevState: any) => ({
             ...prevState,
             data: data,

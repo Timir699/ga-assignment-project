@@ -41,6 +41,7 @@ const Groups = () => {
         page - 1,
         12
       );
+
       response
         .then((response) => response.data)
         .then((data) => {

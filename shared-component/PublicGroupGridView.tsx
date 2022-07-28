@@ -6,10 +6,7 @@ import Link from 'next/link';
 const PublicGroupGridView = ({ groupsData }: any) => {
   const publicGroupData = groupsData?.Groups;
 
-  console.log(publicGroupData?.Groups);
-
   const pageSize = 6;
-
   const [paginationState, setPaginationState] = useState({
     data: publicGroupData,
     totalPage: publicGroupData?.length / pageSize,
