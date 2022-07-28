@@ -10,7 +10,7 @@ const CreateActivityModal: React.FC = () => {
   };
 
   const handleOk = () => {
-    setIsModalVisible(false);
+    // setIsModalVisible(false);
   };
 
   const handleCancel = () => {
@@ -32,7 +32,7 @@ const CreateActivityModal: React.FC = () => {
         okText="Create"
         destroyOnClose={true}
       >
-        <CreateActivityForm />
+        <CreateActivityForm setIsModalVisible={setIsModalVisible} />
       </Modal>
     </>
   );

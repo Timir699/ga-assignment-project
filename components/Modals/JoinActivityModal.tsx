@@ -42,7 +42,7 @@ const JoinActivityModal: React.FC = () => {
       );
 
       response
-        .then((response) => response?.data)
+        .then((response: any) => response?.data)
         .then((data) => {
           setOptions(data);
         });

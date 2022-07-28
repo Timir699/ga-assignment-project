@@ -2,13 +2,14 @@ import { baseActivityUrl, baseGroupUrl, baseSearchurl, baseUrl } from '../api';
 import axios from 'axios';
 import auth from '../auth';
 
-const allLibraryActivity = (pageIndex: any, pageSize: number, data: any) =>
+const allLibraryActivity = (pageIndex: any, pageSize: number, data: any) => {
   axios.post(`${baseActivityUrl}/v1/activity/library`, data, {
     params: {
       pageIndex,
       pageSize,
     },
   });
+};
 
 const activityLibraryDetails = (id: any) => {
   return axios.get(`${baseActivityUrl}/v1/activity/${id}/settings`);
@@ -92,6 +93,33 @@ const getClassYear = (token: any) => {
   return classYear;
 };
 
+const createActivity = (token: any, data: any) => {
+  console.log(data);
+
+  const payload = {
+    ApplicationId: 'e1e0322c-acb0-4a24-958c-23b2ad912a2c',
+    TenantId: 'af3baf1d-7aae-462c-9d1e-051cef459b86',
+    Name: data.Name,
+    ActivityType: data.ActivityType,
+    GroupId: data.GroupId,
+    classYearId: data.classYearId,
+  };
+  const user = auth.userInfo(token);
+  return user.then((data) => {
+    const createAnActivity = axios.post(
+      `${baseActivityUrl}/v1/activity/create/${data.data.UserId}`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          deviceid: 123456,
+        },
+      }
+    );
+    return createAnActivity;
+  });
+};
+
 const LibraryActivity = {
   allLibraryActivity,
   getOwnLibraryActivity,
@@ -100,6 +128,7 @@ const LibraryActivity = {
   getActivityRoles,
   joinLibrary,
   getClassYear,
+  createActivity,
 };
 
 export default LibraryActivity;

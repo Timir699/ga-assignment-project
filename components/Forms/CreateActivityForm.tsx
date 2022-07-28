@@ -5,14 +5,15 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import api from '../../api';
 
-let ActivityType = [
-  { value: 'project', label: 'Project' },
-  { value: 'company', label: 'Company' },
-  { value: 'internship', label: 'Internship' },
-  { value: 'challenge', label: 'Challenge' },
-  { value: 'service', label: 'Service' },
-  { value: 'event', label: 'Event' },
+const ActivityTypes = [
+  { name: 'Project', code: 0, id: '0' },
+  { name: 'Company', code: 1, id: '1' },
+  { name: 'Internship', code: 2, id: '2' },
+  { name: 'Challenge', code: 3, id: '3' },
+  { name: 'Service', code: 4, id: '4' },
+  { name: 'Event', code: 5, id: '5' },
 ];
+
 let developementGoals = [
   { value: 'animals', label: 'Animals' },
   { value: 'clean', label: 'Clean Oceans' },
@@ -33,7 +34,7 @@ let developementGoals = [
   { value: 'technology', label: 'Technology' },
 ];
 
-const CreateActivityForm = () => {
+const CreateActivityForm = (props: any) => {
   const runOneTime = useRef(true);
   const router = useRouter();
 
@@ -42,6 +43,28 @@ const CreateActivityForm = () => {
 
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
+    const tokenStr = localStorage.getItem('token')
+      ? localStorage.getItem('token')
+      : '';
+
+    if (tokenStr) {
+      const tokenObj =
+        typeof tokenStr == 'string' && tokenStr != ''
+          ? JSON.parse(tokenStr)
+          : { access_token: '' };
+
+      const response = api.LibraryActivity.createActivity(
+        tokenObj.access_token,
+        values
+      );
+
+      response
+        .then((response: any) => response?.data)
+        .then((data) => {
+          console.log(data);
+        });
+    }
+    props.setIsModalVisible(false);
   };
 
   const onSecondCityChange = (values: any) => {
@@ -98,7 +121,7 @@ const CreateActivityForm = () => {
       <Form.Item
         labelCol={{ span: 24 }}
         label="Activity Name"
-        name="activity-name"
+        name="Name"
         rules={[
           {
             required: true,
@@ -116,7 +139,7 @@ const CreateActivityForm = () => {
       <Form.Item
         labelCol={{ span: 24 }}
         label="Activity Type"
-        name="activity-type"
+        name="ActivityType"
         rules={[
           {
             required: true,
@@ -128,18 +151,18 @@ const CreateActivityForm = () => {
           size="large"
           placeholder="Select Type"
           style={{ maxWidth: 500, borderRadius: '5px' }}
-          value={ActivityType}
+          value={ActivityTypes}
           onChange={onSecondCityChange}
         >
-          {ActivityType.map((option) => (
-            <Option key={option.value}>{option.label}</Option>
+          {ActivityTypes.map((option) => (
+            <Option key={option.id}>{option.name}</Option>
           ))}
         </Select>
       </Form.Item>
       <Form.Item
         labelCol={{ span: 24 }}
         label="Group"
-        name="Group"
+        name="GroupId"
         rules={[
           {
             required: true,
@@ -165,7 +188,7 @@ const CreateActivityForm = () => {
       <Form.Item
         labelCol={{ span: 24 }}
         label="Select relevant UN Sustainable Development Goals"
-        name="goals"
+        name="Categories"
       >
         <Select
           mode="multiple"
@@ -184,7 +207,7 @@ const CreateActivityForm = () => {
       <Form.Item
         labelCol={{ span: 24 }}
         label="Select Class Year"
-        name="class-year"
+        name="classYearId"
         rules={[
           {
             required: true,
