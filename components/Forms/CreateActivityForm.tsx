@@ -1,7 +1,9 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+import api from '../../api';
 
 let ActivityType = [
   { value: 'project', label: 'Project' },
@@ -10,10 +12,6 @@ let ActivityType = [
   { value: 'challenge', label: 'Challenge' },
   { value: 'service', label: 'Service' },
   { value: 'event', label: 'Event' },
-];
-let groups = [
-  { value: 'stagging', label: 'Stagging Root Group' },
-  { value: 'testing', label: 'Testing sub group of root' },
 ];
 let developementGoals = [
   { value: 'animals', label: 'Animals' },
@@ -34,16 +32,14 @@ let developementGoals = [
   { value: 'sustainability', label: 'Sustainability' },
   { value: 'technology', label: 'Technology' },
 ];
-let classYear = [
-  { value: '2020', label: '2020' },
-  { value: '2021', label: '2021' },
-  { value: '2022', label: '2022' },
-  { value: '2023', label: '2023' },
-  { value: '2024', label: '2024' },
-  { value: '2025', label: '2025' },
-];
 
 const CreateActivityForm = () => {
+  const runOneTime = useRef(true);
+  const router = useRouter();
+
+  const [groups, setGroups] = useState<any>();
+  const [classYear, setClassYear] = useState<any>();
+
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
   };
@@ -51,6 +47,44 @@ const CreateActivityForm = () => {
   const onSecondCityChange = (values: any) => {
     console.log(values);
   };
+
+  useEffect(() => {
+    if (runOneTime.current) {
+      runOneTime.current = false;
+      const tokenStr = localStorage.getItem('token')
+        ? localStorage.getItem('token')
+        : '';
+
+      if (tokenStr) {
+        const tokenObj =
+          typeof tokenStr == 'string' && tokenStr != ''
+            ? JSON.parse(tokenStr)
+            : { access_token: '' };
+
+        const response = api.GroupActivity.groupOptionList(
+          tokenObj.access_token
+        );
+
+        response
+          .then((response) => response.data)
+          .then((data) => {
+            console.log(data.Groups);
+            setGroups(data.Groups);
+          });
+
+        const response2 = api.LibraryActivity.getClassYear(
+          tokenObj.access_token
+        );
+
+        response2
+          .then((response2) => response2.data)
+          .then((data) => {
+            console.log(data);
+            setClassYear(data);
+          });
+      }
+    }
+  }, []);
 
   return (
     <Form
@@ -120,9 +154,11 @@ const CreateActivityForm = () => {
           value={groups}
           onChange={onSecondCityChange}
         >
-          {groups.map((option) => (
-            <Option key={option.value}>{option.label}</Option>
-          ))}
+          {Array.isArray(groups)
+            ? groups?.map((option: any) => (
+                <Option key={option.Id}>{option.Title}</Option>
+              ))
+            : null}
         </Select>
       </Form.Item>
 
@@ -130,12 +166,6 @@ const CreateActivityForm = () => {
         labelCol={{ span: 24 }}
         label="Select relevant UN Sustainable Development Goals"
         name="goals"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Goals!',
-          },
-        ]}
       >
         <Select
           mode="multiple"
@@ -169,9 +199,11 @@ const CreateActivityForm = () => {
           value={classYear}
           onChange={onSecondCityChange}
         >
-          {classYear.map((option) => (
-            <Option key={option.value}>{option.label}</Option>
-          ))}
+          {Array.isArray(classYear)
+            ? classYear.map((option) => (
+                <Option key={option.Id}>{option.Title}</Option>
+              ))
+            : null}
         </Select>
       </Form.Item>
     </Form>

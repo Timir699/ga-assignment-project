@@ -1,4 +1,4 @@
-import { baseActivityUrl } from '../api';
+import { baseActivityUrl, baseGroupUrl, baseSearchurl, baseUrl } from '../api';
 import axios from 'axios';
 import auth from '../auth';
 
@@ -82,6 +82,16 @@ const joinLibrary = (token: any, data: any) => {
   });
 };
 
+const getClassYear = (token: any) => {
+  const classYear = axios.get(`${baseSearchurl}/v1/classyear/all`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      deviceid: 123456,
+    },
+  });
+  return classYear;
+};
+
 const LibraryActivity = {
   allLibraryActivity,
   getOwnLibraryActivity,
@@ -89,6 +99,7 @@ const LibraryActivity = {
   joinActivitySearch,
   getActivityRoles,
   joinLibrary,
+  getClassYear,
 };
 
 export default LibraryActivity;

@@ -2,10 +2,24 @@ import { baseGroupUrl } from '../api';
 import axios from 'axios';
 import auth from '../auth';
 
-const getOwnGroupList = (token: any) =>
-  axios.get(`${baseGroupUrl}/api/v1/group`, {
-    headers: { Authorization: `Bearer ${token}` },
+const getOwnGroupList = (token: any, page: any, pageSize: any) => {
+  const user = auth.userInfo(token);
+  return user.then((data) => {
+    const myGroups = axios.get(`${baseGroupUrl}/api/v1/group`, {
+      params: {
+        pageNum: page,
+        pageSize: pageSize,
+        userId: data.data.UserId,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        deviceid: 123456,
+      },
+    });
+    return myGroups;
   });
+};
+
 const getGroupList = (
   pageIndex: number,
   pageSize: number,
@@ -64,6 +78,25 @@ const masterGroupSearch = (token: any, SearchQuery: any) => {
     return masterSearch;
   });
 };
+const groupOptionList = (token: any) => {
+  const user = auth.userInfo(token);
+  return user.then((data) => {
+    console.log(data.data.UserId);
+    const groupOption = axios.get(
+      `${baseGroupUrl}/api/v1/group/search-groups`,
+      {
+        params: {
+          userId: data.data.UserId,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          deviceid: 123456,
+        },
+      }
+    );
+    return groupOption;
+  });
+};
 
 const joinGroup = (token: any, data: any) => {
   const groupId = [data.groupId];
@@ -110,6 +143,7 @@ const GroupActivity = {
   joinGroup,
   masterGroupSearch,
   createGroup,
+  groupOptionList,
 };
 
 export default GroupActivity;

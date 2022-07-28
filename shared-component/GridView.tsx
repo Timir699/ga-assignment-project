@@ -79,8 +79,6 @@ const GridView = () => {
               data: data,
               totalDataInPage: paginationState?.data?.Count / pageDataSize,
               current: router.query.pageIndex,
-              minIndex: 0,
-              maxIndex: pageDataSize,
             }));
           });
       }

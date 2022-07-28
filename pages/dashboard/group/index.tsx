@@ -5,27 +5,65 @@ import api from '../../../api/index';
 import { Col, Row } from 'antd';
 import CustomCard from '../../../shared-component/CustomCard';
 import Link from 'next/link';
-
 import JoinGroupModal from '../../../shared-component/JoinGroupModal';
 import CreateGroupModal from '../../../shared-component/CreateGroupModal';
+import ProtectedLayout from '../../../shared-component/ProtectedLayout';
 
 const Groups = () => {
+  const runOneTime = useRef(true);
   const router = useRouter();
 
   const [groupActibities, setGroupActibities] = useState<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isJoinModalVisible, setJoinIsModalVisible] = useState(false);
 
-  const runOneTime = useRef(true);
+  const pageDataSize = 12;
+
+  const [paginationState, setPaginationState] = useState<any>({
+    data: null,
+    totalDataInPage: pageDataSize,
+    current: router.query.pageIndex,
+  });
+
+  const onPageChange = (page: number) => {
+    const tokenStr = localStorage.getItem('token')
+      ? localStorage.getItem('token')
+      : '';
+
+    if (tokenStr) {
+      const tokenObj =
+        typeof tokenStr == 'string' && tokenStr != ''
+          ? JSON.parse(tokenStr)
+          : { access_token: '' };
+
+      const response = api.GroupActivity.getOwnGroupList(
+        tokenObj.access_token,
+        page - 1,
+        12
+      );
+      response
+        .then((response) => response.data)
+        .then((data) => {
+          setPaginationState((prevState: any) => ({
+            ...prevState,
+            data: data,
+            totalDataInPage: paginationState?.data?.TotalCount / pageDataSize,
+            current: page,
+          }));
+        });
+    }
+    router.push({
+      pathname: '/dashboard/group',
+      query: { pageIndex: page - 1, pageSize: 12 },
+    });
+  };
 
   useEffect(() => {
-    if (runOneTime.current) {
+    if (runOneTime.current && router.isReady) {
       runOneTime.current = false;
       const tokenStr = localStorage.getItem('token')
         ? localStorage.getItem('token')
         : '';
-
-      tokenStr ? console.log('login success') : router.push('/login');
 
       if (tokenStr) {
         const tokenObj =
@@ -34,36 +72,26 @@ const Groups = () => {
             : { access_token: '' };
 
         const response = api.GroupActivity.getOwnGroupList(
-          tokenObj.access_token
+          tokenObj.access_token,
+          0,
+          12
         );
 
         response
           .then((response) => response.data)
           .then((data) => {
-            setGroupActibities(data);
+            console.log(data);
+
+            setPaginationState((prevState: any) => ({
+              ...prevState,
+              data: data,
+              totalDataInPage: paginationState?.data?.TotalCount / pageDataSize,
+              current: router.query.pageIndex,
+            }));
           });
       }
     }
-  }, []);
-
-  const pageSize = 12;
-
-  const [paginationState, setPaginationState] = useState({
-    data: groupActibities,
-    totalPage: groupActibities?.Groups?.length / pageSize,
-    current: 1,
-    minIndex: 0,
-    maxIndex: 0,
-  });
-
-  const onPageChange = (page: any) => {
-    setPaginationState((prevState) => ({
-      ...prevState,
-      current: page,
-      minIndex: (page - 1) * pageSize,
-      maxIndex: page * pageSize,
-    }));
-  };
+  }, [router.isReady]);
 
   const showJoinModal = () => {
     setJoinIsModalVisible(true);
@@ -74,7 +102,6 @@ const Groups = () => {
   const joinModalHandleCancel = () => {
     setJoinIsModalVisible(false);
   };
-
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -86,6 +113,8 @@ const Groups = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+  console.log(paginationState?.data?.Groups);
 
   return (
     <div className="container">
@@ -114,7 +143,7 @@ const Groups = () => {
       <div className="mt-12 ml-[5%]">
         <h2>Group List</h2>
         <Row gutter={[16, 16]}>
-          {groupActibities?.Groups?.map((e: any) => (
+          {paginationState?.data?.Groups?.map((e: any) => (
             <Link key={e.Id} href={`/dashboard/group/${e.Id}`}>
               <Col xs={24} xl={8} lg={12}>
                 <CustomCard name={e.Title} id={e.Id} TeamCount={e.TeamCount} />
@@ -124,9 +153,9 @@ const Groups = () => {
         </Row>
         <Pagination
           style={{ marginTop: 50 }}
-          pageSize={pageSize}
+          pageSize={pageDataSize}
           current={paginationState.current}
-          total={groupActibities?.Groups?.length}
+          total={paginationState?.data?.TotalCount}
           onChange={onPageChange}
         />
       </div>
