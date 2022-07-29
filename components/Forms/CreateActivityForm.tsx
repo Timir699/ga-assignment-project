@@ -1,37 +1,36 @@
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Select } from 'antd';
-import { Option } from 'antd/lib/mentions';
-import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
-import api from '../../api';
+import { Form, Input, Select } from "antd";
+import { Option } from "antd/lib/mentions";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+import api from "../../api";
 
 const ActivityTypes = [
-  { name: 'Project', code: 0, id: '0' },
-  { name: 'Company', code: 1, id: '1' },
-  { name: 'Internship', code: 2, id: '2' },
-  { name: 'Challenge', code: 3, id: '3' },
-  { name: 'Service', code: 4, id: '4' },
-  { name: 'Event', code: 5, id: '5' },
+  { name: "Project", code: 0, id: "0" },
+  { name: "Company", code: 1, id: "1" },
+  { name: "Internship", code: 2, id: "2" },
+  { name: "Challenge", code: 3, id: "3" },
+  { name: "Service", code: 4, id: "4" },
+  { name: "Event", code: 5, id: "5" },
 ];
 
 let developementGoals = [
-  { value: 'animals', label: 'Animals' },
-  { value: 'clean', label: 'Clean Oceans' },
-  { value: 'climate', label: 'Climate Action' },
-  { value: 'culture', label: 'Culture' },
-  { value: 'gender', label: 'Gender Equality' },
-  { value: 'health', label: 'Health & Wellness' },
-  { value: 'hunger', label: 'Hunger' },
-  { value: 'mental', label: 'Mental Health' },
-  { value: 'partnerShips', label: 'PartnerShips for the goals' },
-  { value: 'peace building', label: 'Peace Building' },
-  { value: 'peace justice', label: 'Peace Justice & Strong Institutions' },
-  { value: 'poverty', label: 'Poverty' },
-  { value: 'quality education', label: 'Quality Education' },
-  { value: 'social entrepreneurship', label: 'Social Entrepreneurship' },
-  { value: 'social justice', label: 'Social Justice' },
-  { value: 'sustainability', label: 'Sustainability' },
-  { value: 'technology', label: 'Technology' },
+  { value: "animals", label: "Animals" },
+  { value: "clean", label: "Clean Oceans" },
+  { value: "climate", label: "Climate Action" },
+  { value: "culture", label: "Culture" },
+  { value: "gender", label: "Gender Equality" },
+  { value: "health", label: "Health & Wellness" },
+  { value: "hunger", label: "Hunger" },
+  { value: "mental", label: "Mental Health" },
+  { value: "partnerShips", label: "PartnerShips for the goals" },
+  { value: "peace building", label: "Peace Building" },
+  { value: "peace justice", label: "Peace Justice & Strong Institutions" },
+  { value: "poverty", label: "Poverty" },
+  { value: "quality education", label: "Quality Education" },
+  { value: "social entrepreneurship", label: "Social Entrepreneurship" },
+  { value: "social justice", label: "Social Justice" },
+  { value: "sustainability", label: "Sustainability" },
+  { value: "technology", label: "Technology" },
 ];
 
 const CreateActivityForm = (props: any) => {
@@ -42,16 +41,16 @@ const CreateActivityForm = (props: any) => {
   const [classYear, setClassYear] = useState<any>();
 
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-    const tokenStr = localStorage.getItem('token')
-      ? localStorage.getItem('token')
-      : '';
+    console.log("Received values of form: ", values);
+    const tokenStr = localStorage.getItem("token")
+      ? localStorage.getItem("token")
+      : "";
 
     if (tokenStr) {
       const tokenObj =
-        typeof tokenStr == 'string' && tokenStr != ''
+        typeof tokenStr == "string" && tokenStr != ""
           ? JSON.parse(tokenStr)
-          : { access_token: '' };
+          : { access_token: "" };
 
       const response = api.LibraryActivity.createActivity(
         tokenObj.access_token,
@@ -70,19 +69,20 @@ const CreateActivityForm = (props: any) => {
   const onSecondCityChange = (values: any) => {
     console.log(values);
   };
+  console.log(groups);
 
   useEffect(() => {
     if (runOneTime.current) {
       runOneTime.current = false;
-      const tokenStr = localStorage.getItem('token')
-        ? localStorage.getItem('token')
-        : '';
+      const tokenStr = localStorage.getItem("token")
+        ? localStorage.getItem("token")
+        : "";
 
       if (tokenStr) {
         const tokenObj =
-          typeof tokenStr == 'string' && tokenStr != ''
+          typeof tokenStr == "string" && tokenStr != ""
             ? JSON.parse(tokenStr)
-            : { access_token: '' };
+            : { access_token: "" };
 
         const response = api.GroupActivity.groupOptionList(
           tokenObj.access_token
@@ -91,6 +91,8 @@ const CreateActivityForm = (props: any) => {
         response
           .then((response) => response.data)
           .then((data) => {
+            console.log(data);
+
             console.log(data.Groups);
             setGroups(data.Groups);
           });
@@ -125,13 +127,13 @@ const CreateActivityForm = (props: any) => {
         rules={[
           {
             required: true,
-            message: 'Please input Activity Name!',
+            message: "Please input Activity Name!",
           },
         ]}
       >
         <Input
           size="large"
-          style={{ maxWidth: 500, borderRadius: '5px' }}
+          style={{ maxWidth: 500, borderRadius: "5px" }}
           placeholder="Type here"
         />
       </Form.Item>
@@ -143,14 +145,14 @@ const CreateActivityForm = (props: any) => {
         rules={[
           {
             required: true,
-            message: 'Please Select a type',
+            message: "Please Select a type",
           },
         ]}
       >
         <Select
           size="large"
           placeholder="Select Type"
-          style={{ maxWidth: 500, borderRadius: '5px' }}
+          style={{ maxWidth: 500, borderRadius: "5px" }}
           value={ActivityTypes}
           onChange={onSecondCityChange}
         >
@@ -166,14 +168,14 @@ const CreateActivityForm = (props: any) => {
         rules={[
           {
             required: true,
-            message: 'Please Select a Group',
+            message: "Please Select a Group",
           },
         ]}
       >
         <Select
           size="large"
           placeholder="Select Group"
-          style={{ maxWidth: 500, borderRadius: '5px' }}
+          style={{ maxWidth: 500, borderRadius: "5px" }}
           value={groups}
           onChange={onSecondCityChange}
         >
@@ -194,7 +196,7 @@ const CreateActivityForm = (props: any) => {
           mode="multiple"
           size="large"
           placeholder="Enter Goals"
-          style={{ maxWidth: 500, borderRadius: '5px' }}
+          style={{ maxWidth: 500, borderRadius: "5px" }}
           value={developementGoals}
           onChange={onSecondCityChange}
         >
@@ -211,14 +213,14 @@ const CreateActivityForm = (props: any) => {
         rules={[
           {
             required: true,
-            message: 'Please Select a year',
+            message: "Please Select a year",
           },
         ]}
       >
         <Select
           size="large"
           placeholder="Select Class Year"
-          style={{ maxWidth: 500, borderRadius: '5px' }}
+          style={{ maxWidth: 500, borderRadius: "5px" }}
           value={classYear}
           onChange={onSecondCityChange}
         >
