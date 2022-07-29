@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, DatePicker, Form, Input, Layout, Menu, Select } from 'antd';
-import { useRouter } from 'next/router';
-import api from '../../api';
-import { Option } from 'antd/lib/mentions';
-import { COUNTRIES } from '../data/Countrys';
-import { TIMEZONES } from '../data/TimeZone';
-import moment from 'moment';
+import { Button, DatePicker, Form, Input, Layout, Menu, Select } from "antd";
+import { Option } from "antd/lib/mentions";
+import moment from "moment";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+import api from "../../api";
+import { COUNTRIES } from "../../data/countrys";
+import { TIMEZONES } from "../../data/timeZone";
 
 const { Header, Sider, Content } = Layout;
 
-const dateFormat = 'YYYY/MM/DD';
+const dateFormat = "YYYY/MM/DD";
 const today = moment();
 
 const onFinish = (value: any) => {
@@ -28,15 +28,15 @@ const UserDetails = () => {
   useEffect(() => {
     if (runOneTime.current) {
       runOneTime.current = false;
-      const tokenStr = localStorage.getItem('token')
-        ? localStorage.getItem('token')
-        : '';
+      const tokenStr = localStorage.getItem("token")
+        ? localStorage.getItem("token")
+        : "";
 
       if (tokenStr) {
         const tokenObj =
-          typeof tokenStr == 'string' && tokenStr != ''
+          typeof tokenStr == "string" && tokenStr != ""
             ? JSON.parse(tokenStr)
-            : { access_token: '' };
+            : { access_token: "" };
 
         const response = api.profileInformation.profileInfo(
           tokenObj.access_token
@@ -79,18 +79,18 @@ const UserDetails = () => {
               <Menu
                 theme="light"
                 mode="inline"
-                defaultSelectedKeys={['1']}
+                defaultSelectedKeys={["1"]}
                 items={[
                   {
-                    key: '1',
-                    label: 'Personal Info',
+                    key: "1",
+                    label: "Personal Info",
                   },
                 ]}
               />
             </Sider>
             <Layout>
               <Header
-                style={{ height: '200px', borderBottom: '1px solid black' }}
+                style={{ height: "200px", borderBottom: "1px solid black" }}
               >
                 <div className="flex justify-between">
                   <div>
@@ -104,7 +104,7 @@ const UserDetails = () => {
                   </div>
                 </div>
               </Header>
-              <Content style={{ background: '#fff', padding: '20px' }}>
+              <Content style={{ background: "#fff", padding: "20px" }}>
                 <Form
                   name="normal_login"
                   className="login-form"
@@ -121,14 +121,14 @@ const UserDetails = () => {
                       rules={[
                         {
                           required: true,
-                          message: 'Please input your First Name!',
+                          message: "Please input your First Name!",
                         },
                       ]}
                     >
                       {userData?.firstName ? (
                         <Input
                           size="large"
-                          style={{ maxWidth: 250, borderRadius: '5px' }}
+                          style={{ maxWidth: 250, borderRadius: "5px" }}
                           placeholder="First Name"
                           defaultValue={userData?.firstName}
                         />
@@ -142,14 +142,14 @@ const UserDetails = () => {
                       rules={[
                         {
                           required: true,
-                          message: 'Please input your Last Name!',
+                          message: "Please input your Last Name!",
                         },
                       ]}
                     >
                       {userData?.firstName ? (
                         <Input
                           size="large"
-                          style={{ maxWidth: 250, borderRadius: '5px' }}
+                          style={{ maxWidth: 250, borderRadius: "5px" }}
                           placeholder="Last Name"
                           defaultValue={userData?.lastName}
                         />
@@ -164,13 +164,13 @@ const UserDetails = () => {
                       rules={[
                         {
                           required: true,
-                          message: 'Please input your State!',
+                          message: "Please input your State!",
                         },
                       ]}
                     >
                       <Input
                         size="large"
-                        style={{ maxWidth: 250, borderRadius: '5px' }}
+                        style={{ maxWidth: 250, borderRadius: "5px" }}
                         placeholder="State"
                       />
                     </Form.Item>
@@ -181,13 +181,13 @@ const UserDetails = () => {
                       rules={[
                         {
                           required: true,
-                          message: 'Please input your City!',
+                          message: "Please input your City!",
                         },
                       ]}
                     >
                       <Input
                         size="large"
-                        style={{ maxWidth: 250, borderRadius: '5px' }}
+                        style={{ maxWidth: 250, borderRadius: "5px" }}
                         placeholder="City"
                       />
                     </Form.Item>
@@ -200,13 +200,13 @@ const UserDetails = () => {
                       rules={[
                         {
                           required: true,
-                          message: 'Please input your Postal Code!',
+                          message: "Please input your Postal Code!",
                         },
                       ]}
                     >
                       <Input
                         size="large"
-                        style={{ maxWidth: 250, borderRadius: '5px' }}
+                        style={{ maxWidth: 250, borderRadius: "5px" }}
                         placeholder="Postal Code"
                       />
                     </Form.Item>
