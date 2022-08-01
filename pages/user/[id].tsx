@@ -1,29 +1,65 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, DatePicker, Form, Input, Layout, Menu, Select } from 'antd';
-import { useRouter } from 'next/router';
 import api from '../../api';
 import { Option } from 'antd/lib/mentions';
-import { COUNTRIES } from '../data/Countrys';
-import { TIMEZONES } from '../data/TimeZone';
+import { COUNTRIES } from '../../data/Countrys';
+import { TIMEZONES } from '../../data/TimeZone';
 import moment from 'moment';
+import dayjs from 'dayjs';
+import { FormInstance, useForm } from 'antd/lib/form/Form';
 
 const { Header, Sider, Content } = Layout;
 
-const dateFormat = 'YYYY/MM/DD';
-const today = moment();
-
-const onFinish = (value: any) => {
-  console.log(value.date);
-  let completeDate = new Date(value.date);
-  console.log(completeDate);
-};
+const dateFormat = 'DD/MM/YYYY';
 
 const UserDetails = () => {
+  const formRef = React.createRef<FormInstance>();
   const [userData, setUserData] = useState<any>({});
-  const router = useRouter();
-  console.log(router.query.id);
 
   const runOneTime = useRef(true);
+
+  const onFinish = (values: any) => {
+    let completeDate = new Date(values.birthDay._d);
+    const formateDate = dayjs(completeDate).format('DD/MM/YYYY');
+    console.log({ values, formateDate });
+
+    const payload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      state: values.state,
+      tenantId: 'af3baf1d-7aae-462c-9d1e-051cef459b86',
+      timeZone: values.timeZone.value,
+      profileData: {
+        postalCode: values.postalCode,
+      },
+      country: values.country.value,
+      birthDay: formateDate,
+      city: values.city,
+      email: values.email,
+    };
+    console.log(payload);
+
+    const tokenStr = localStorage.getItem('token')
+      ? localStorage.getItem('token')
+      : '';
+
+    if (tokenStr) {
+      const tokenObj =
+        typeof tokenStr == 'string' && tokenStr != ''
+          ? JSON.parse(tokenStr)
+          : { access_token: '' };
+
+      const response = api.profileInformation.profileUpdate(
+        tokenObj.access_token,
+        payload
+      );
+      response
+        .then((response) => response?.data)
+        .then((data) => {
+          console.log(data);
+        });
+    }
+  };
 
   useEffect(() => {
     if (runOneTime.current) {
@@ -50,21 +86,14 @@ const UserDetails = () => {
       }
     }
   }, []);
-  const handleChange = (value: any) => {
-    console.log(value);
-  };
 
-  const [placement, SetPlacement] = useState();
-
-  const placementChange = (e: any) => {
-    console.log(e._d);
-
-    // SetPlacement(e.target.value);
-  };
-
-  console.log(userData);
-  const today = moment();
-
+  useEffect(() => {
+    console.log(userData);
+    formRef.current!.setFieldsValue({
+      ...userData,
+      birthDay: moment(userData.birthDay),
+    });
+  }, [userData]);
   return (
     <div className="container">
       <>
@@ -106,11 +135,9 @@ const UserDetails = () => {
               </Header>
               <Content style={{ background: '#fff', padding: '20px' }}>
                 <Form
+                  ref={formRef}
                   name="normal_login"
                   className="login-form"
-                  initialValues={{
-                    remember: true,
-                  }}
                   onFinish={onFinish}
                 >
                   <div className="flex">
@@ -130,10 +157,8 @@ const UserDetails = () => {
                           size="large"
                           style={{ maxWidth: 250, borderRadius: '5px' }}
                           placeholder="First Name"
-                          defaultValue={userData?.firstName}
                         />
                       ) : null}
-                      {/* <h2>{userData?.firstName}</h2> */}
                     </Form.Item>
                     <Form.Item
                       labelCol={{ span: 24 }}
@@ -146,12 +171,11 @@ const UserDetails = () => {
                         },
                       ]}
                     >
-                      {userData?.firstName ? (
+                      {userData?.lastName ? (
                         <Input
                           size="large"
                           style={{ maxWidth: 250, borderRadius: '5px' }}
                           placeholder="Last Name"
-                          defaultValue={userData?.lastName}
                         />
                       ) : null}
                     </Form.Item>
@@ -168,11 +192,13 @@ const UserDetails = () => {
                         },
                       ]}
                     >
-                      <Input
-                        size="large"
-                        style={{ maxWidth: 250, borderRadius: '5px' }}
-                        placeholder="State"
-                      />
+                      {userData?.state ? (
+                        <Input
+                          size="large"
+                          style={{ maxWidth: 250, borderRadius: '5px' }}
+                          placeholder="State"
+                        />
+                      ) : null}
                     </Form.Item>
                     <Form.Item
                       labelCol={{ span: 24 }}
@@ -185,18 +211,20 @@ const UserDetails = () => {
                         },
                       ]}
                     >
-                      <Input
-                        size="large"
-                        style={{ maxWidth: 250, borderRadius: '5px' }}
-                        placeholder="City"
-                      />
+                      {userData?.city ? (
+                        <Input
+                          size="large"
+                          style={{ maxWidth: 250, borderRadius: '5px' }}
+                          placeholder="City"
+                        />
+                      ) : null}
                     </Form.Item>
                   </div>
                   <div>
                     <Form.Item
                       labelCol={{ span: 24 }}
                       label="Postal Code"
-                      name="Postal Code"
+                      name="postalCode"
                       rules={[
                         {
                           required: true,
@@ -204,63 +232,93 @@ const UserDetails = () => {
                         },
                       ]}
                     >
-                      <Input
-                        size="large"
-                        style={{ maxWidth: 250, borderRadius: '5px' }}
-                        placeholder="Postal Code"
-                      />
+                      {userData?.profileData?.postalCode ? (
+                        <Input
+                          size="large"
+                          style={{ maxWidth: 250, borderRadius: '5px' }}
+                          placeholder="Postal Code"
+                        />
+                      ) : null}
                     </Form.Item>
                     <Form.Item
                       labelCol={{ span: 24 }}
                       label="Country Name"
                       name="country"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input your country!',
+                        },
+                      ]}
                     >
-                      <Select
-                        labelInValue
-                        // defaultValue={}
-                        style={{ width: 300 }}
-                      >
-                        {COUNTRIES.map((country) => (
-                          <Option key={country.code} value={country.code}>
-                            {country.name}
-                          </Option>
-                        ))}
-                      </Select>
+                      {userData?.country ? (
+                        <Select labelInValue style={{ width: 300 }}>
+                          {COUNTRIES.map((country) => (
+                            <Option key={country.code} value={country.code}>
+                              {country.name}
+                            </Option>
+                          ))}
+                        </Select>
+                      ) : null}
                     </Form.Item>
                   </div>
                   <div>
                     <Form.Item
                       labelCol={{ span: 24 }}
                       label="Time Zone"
-                      name="Time Zone"
+                      name="timeZone"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input your Time Zone!',
+                        },
+                      ]}
                     >
-                      <Select
-                        labelInValue
-                        // defaultValue={}
-                        defaultValue={moment()}
-                        style={{ width: 300 }}
-                      >
-                        {TIMEZONES.map((timezone) => (
-                          <Option
-                            key={timezone.timeZoneId.toString()}
-                            value={timezone.value.toString()}
-                          >
-                            {timezone.text}
-                          </Option>
-                        ))}
-                      </Select>
+                      {userData?.timeZone ? (
+                        <Select labelInValue style={{ width: 300 }}>
+                          {TIMEZONES.map((timezone) => (
+                            <Option
+                              key={timezone.timeZoneId.toString()}
+                              value={timezone.value.toString()}
+                            >
+                              {timezone.text}
+                            </Option>
+                          ))}
+                        </Select>
+                      ) : null}
                     </Form.Item>
                     <Form.Item
                       labelCol={{ span: 24 }}
-                      label="Birrthday"
-                      name="date"
+                      label="Birthday"
+                      name="birthDay"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input your Birthday!',
+                        },
+                      ]}
                     >
-                      <DatePicker
-                        format={dateFormat}
-                        onChange={placementChange}
-                        placement={placement}
-                        defaultValue={moment()}
-                      />
+                      <DatePicker format={dateFormat} />
+                    </Form.Item>
+                    <Form.Item
+                      labelCol={{ span: 24 }}
+                      label="Email"
+                      name="email"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input your Email!',
+                        },
+                      ]}
+                    >
+                      {userData?.email ? (
+                        <Input
+                          size="large"
+                          style={{ maxWidth: 250, borderRadius: '5px' }}
+                          placeholder="Email"
+                          type="email"
+                        />
+                      ) : null}
                     </Form.Item>
                   </div>
                   <Button htmlType="submit" className="ml-4" type="primary">

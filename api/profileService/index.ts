@@ -18,9 +18,27 @@ const profileInfo = (token: any) => {
     return getProflieInfo;
   });
 };
+const profileUpdate = (token: any, payload: any) => {
+  const user = auth.userInfo(token);
+  return user.then((data) => {
+    console.log(data.data.UserId);
+    const updateProfileInfo = axios.put(
+      `${baseProfileInfo}/v2/profile`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          deviceid: 123456,
+        },
+      }
+    );
+    return updateProfileInfo;
+  });
+};
 
 const profileInformation = {
   profileInfo,
+  profileUpdate,
 };
 
 export default profileInformation;
