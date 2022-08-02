@@ -21,7 +21,6 @@ const UserDetails = () => {
   const onFinish = (values: any) => {
     let completeDate = new Date(values.birthDay._d);
     var formateDate = dayjs(completeDate).format('MM/DD/YYYY');
-    console.log({ values, formateDate });
 
     const payload = {
       firstName: values.firstName,
@@ -37,7 +36,6 @@ const UserDetails = () => {
       city: values.city,
       email: values.email,
     };
-    console.log(payload);
 
     const tokenStr = localStorage.getItem('token')
       ? localStorage.getItem('token')
@@ -88,8 +86,6 @@ const UserDetails = () => {
   }, []);
 
   useEffect(() => {
-    console.log(moment(userData.birthDay));
-
     formRef.current!.setFieldsValue({
       ...userData,
       birthDay: moment(userData.birthDay),
