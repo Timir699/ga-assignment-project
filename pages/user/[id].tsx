@@ -10,7 +10,7 @@ import { FormInstance, useForm } from 'antd/lib/form/Form';
 
 const { Header, Sider, Content } = Layout;
 
-const dateFormat = 'DD/MM/YYYY';
+const dateFormat = 'MM/DD/YYYY';
 
 const UserDetails = () => {
   const formRef = React.createRef<FormInstance>();
@@ -20,7 +20,7 @@ const UserDetails = () => {
 
   const onFinish = (values: any) => {
     let completeDate = new Date(values.birthDay._d);
-    const formateDate = dayjs(completeDate).format('DD/MM/YYYY');
+    var formateDate = dayjs(completeDate).format('MM/DD/YYYY');
     console.log({ values, formateDate });
 
     const payload = {
@@ -88,12 +88,14 @@ const UserDetails = () => {
   }, []);
 
   useEffect(() => {
-    console.log(userData);
+    console.log(moment(userData.birthDay));
+
     formRef.current!.setFieldsValue({
       ...userData,
       birthDay: moment(userData.birthDay),
     });
   }, [userData]);
+
   return (
     <div className="container">
       <>
